@@ -1,3 +1,142 @@
 body {
   background-color: #d8d8d8;
+  margin: 0;
+  height: 100hv;
+  overflow: hidden;
+  transition: 1s;
+}
+
+h1, p {
+  margin: 0;
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.popup {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+.popup__place {
+  position: absolute;
+  width: calc(100vw - 20px);
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4117647059);
+  text-align: center;
+  padding: 10px;
+}
+.popup__place h1 {
+  color: #ffffff;
+  font-size: max(3rem, 5vw);
+  background-color: rgba(105, 105, 105, 0.4117647059);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.popup__place p {
+  color: #e0e0e0;
+  font-size: max(1.5rem, 2vw);
+  background-color: rgba(105, 105, 105, 0.4117647059);
+  border-radius: 10px;
+}
+.popup__place--open {
+  transform: scaleY(1) scaleX(1) translateY(0);
+  transition: 1s ease-out;
+}
+.popup__place--closed {
+  transform: scaleY(0) scaleX(2) skewY(20deg) translateY(-200px);
+  transition: 1s ease-in;
+}
+.popup__diologue {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4117647059);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+  padding: 20px 10vw 50px;
+  width: 80vw;
+  cursor: pointer;
+}
+.popup__diologue span {
+  display: flex;
+  background-color: rgba(105, 105, 105, 0.4117647059);
+  align-items: end;
+  height: 50px;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 10px;
+}
+.popup__diologue span img {
+  border-radius: inherit;
+  width: 50px;
+  height: 50px;
+}
+.popup__diologue span h1 {
+  color: #e0e0e0;
+  font-size: 2rem;
+}
+.popup__diologue p {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(105, 105, 105, 0.4117647059);
+  color: #ffffff;
+  width: 100%;
+  overflow: hidden;
+  font-size: max(1.5rem, 2vw);
+}
+.popup__diologue--open {
+  transform: scaleY(1) scaleX(1) translateY(0);
+  transition: 1s ease-out;
+}
+.popup__diologue--closed {
+  transform: scaleY(0) scaleX(2) skewY(-20deg) translateY(200px);
+  transition: 1s ease-in;
+}
+
+.inventory {
+  position: absolute;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+}
+.inventory__backpack {
+  width: 200px;
+}
+.inventory__backpack img {
+  position: absolute;
+  width: 200px;
+}
+.inventory__backpack__slots {
+  position: relative;
+  top: 50px;
+  left: 30px;
+  width: 100px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: -10;
+}
+.background img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }/*# sourceMappingURL=style.css.map */
