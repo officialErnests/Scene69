@@ -13,13 +13,7 @@ h1, p {
   font-style: normal;
 }
 
-.popup {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10;
-}
-.popup__place {
+.place {
   position: absolute;
   width: calc(100vw - 20px);
   top: 0;
@@ -27,28 +21,29 @@ h1, p {
   text-align: center;
   padding: 10px;
 }
-.popup__place h1 {
+.place h1 {
   color: #ffffff;
   font-size: max(3rem, 5vw);
   background-color: rgba(105, 105, 105, 0.4117647059);
   border-radius: 10px;
   margin-bottom: 10px;
 }
-.popup__place p {
+.place p {
   color: #e0e0e0;
   font-size: max(1.5rem, 2vw);
   background-color: rgba(105, 105, 105, 0.4117647059);
   border-radius: 10px;
 }
-.popup__place--open {
+.place--open {
   transform: scaleY(1) scaleX(1) translateY(0);
   transition: 1s ease-out;
 }
-.popup__place--closed {
+.place--closed {
   transform: scaleY(0) scaleX(2) skewY(20deg) translateY(-200px);
   transition: 1s ease-in;
 }
-.popup__diologue {
+
+.diologue {
   position: absolute;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4117647059);
@@ -61,7 +56,7 @@ h1, p {
   width: 80vw;
   cursor: pointer;
 }
-.popup__diologue span {
+.diologue span {
   display: flex;
   background-color: rgba(105, 105, 105, 0.4117647059);
   align-items: end;
@@ -70,16 +65,16 @@ h1, p {
   border-radius: 10px;
   padding: 10px;
 }
-.popup__diologue span img {
+.diologue span img {
   border-radius: inherit;
   width: 50px;
   height: 50px;
 }
-.popup__diologue span h1 {
+.diologue span h1 {
   color: #e0e0e0;
   font-size: 2rem;
 }
-.popup__diologue p {
+.diologue p {
   border-radius: 10px;
   padding: 10px;
   background-color: rgba(105, 105, 105, 0.4117647059);
@@ -88,37 +83,30 @@ h1, p {
   overflow: hidden;
   font-size: max(1.5rem, 2vw);
 }
-.popup__diologue--open {
+.diologue--open {
   transform: scaleY(1) scaleX(1) translateY(0);
   transition: 1s ease-out;
 }
-.popup__diologue--closed {
+.diologue--closed {
   transform: scaleY(0) scaleX(2) skewY(-20deg) translateY(200px);
   transition: 1s ease-in;
 }
 
-.inventory {
+.backpack {
+  cursor: grab;
+  width: 200px;
   position: absolute;
-  left: 0;
-  width: 200px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-left: 10px;
+  display: block;
 }
-.inventory__backpack {
-  width: 200px;
-}
-.inventory__backpack img {
+.backpack img {
   position: absolute;
   width: 200px;
+  display: block;
 }
-.inventory__backpack__slots {
+.backpack__slots {
   position: relative;
   top: 50px;
-  left: 30px;
+  left: 40px;
   width: 100px;
   height: 200px;
   display: flex;
@@ -126,6 +114,13 @@ h1, p {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+}
+.backpack--closed {
+  transform: translateX(-100px) rotateZ(90deg);
+  transition: 1s ease-out;
+}
+.backpack--open {
+  transition: 1s ease-out;
 }
 
 .background {
@@ -139,4 +134,24 @@ h1, p {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.hand {
+  position: absolute;
+  right: 0;
+  width: 100px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-right: 10px;
+}
+
+.snowstorm {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  pointer-events: none;
 }/*# sourceMappingURL=style.css.map */

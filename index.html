@@ -13,38 +13,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@700&family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="popup">
-        <div class="popup__place popup__place--closed" id="popup_place">
-            <h1>The Best of All Possible Snowdrifts</h1>
-            <p>it is forever snowing in here so grab some hot choclet and enjoy the view :DD</p>
-        </div>
-        <div class="popup__diologue popup__diologue--closed" id="popup_diologue">
-            <span>
-                <img src="xcf/diologue_test.png" alt="some random">
-                <h1>Name of speaker</h1>
-            </span>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic voluptas dolorum, laudantium minima sapiente eveniet animi culpa sint ad pariatur aliquam ipsam cum ut eos fuga maxime aperiam vel tempore.
-            </p>
+    <div class="place place--closed" id="place">
+        <h1>The Best of All Possible Snowdrifts</h1>
+        <p>it is forever snowing in here so grab some hot choclet and enjoy the view :DD</p>
+    </div>
+    <div class="diologue diologue--closed" id="diologue">
+        <span>
+            <img src="xcf/diologue_test.png" alt="some random">
+            <h1>Name of speaker</h1>
+        </span>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic voluptas dolorum, laudantium minima sapiente eveniet animi culpa sint ad pariatur aliquam ipsam cum ut eos fuga maxime aperiam vel tempore.
+        </p>
+    </div>
+
+    <div class="backpack backpack--closed" id="backpack">
+        <img src="xcf/prototype1_backpack_closed.png" alt="backpack" id="backpack_img">
+        <div class="backpack__slots" id="backpack_slot_holder">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
         </div>
     </div>
-    <div class="inventory">
-        <div class="inventory__backpack">
-            <img src="xcf/prototype1_backpack.png" alt="backpack">
-            <div class="inventory__backpack__slots">
-                <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
-                <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
-                <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
-                <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
-                <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
-                <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
-            </div>
-        </div>
-        
+    <div class="hand">
+        <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
     </div>
     <div class="background">
         <img src="xcf/prototype1_bgsnow.png" alt="snow">
     </div>
+    <canvas class="snowstorm">
+
+    </canvas>
     <script src="main.js"></script>
 </body>
 </html>

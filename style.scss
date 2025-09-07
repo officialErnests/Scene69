@@ -23,117 +23,112 @@ h1, p {
     font-style: normal;
 }
 
-.popup {
+.place{
     position: absolute;
-    width: 100vw;
-    height: 100vh;
-    z-index: 10;
-    &__place{
-        position: absolute;
-        width: calc(100vw - 20px);
-        top: 0;
-        background-color: $diologue-bg-primary;
-        text-align: center;
-        padding: 10px;
-        h1 {
-            color: $diologue-primary;
-            font-size: max(3rem, 5vw);
-            background-color: $diologue-bg-secondary;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        p {
-            color: $diologue-secondary;
-            font-size: max(1.5rem, 2vw);
-            background-color: $diologue-bg-secondary;
-            border-radius: 10px;
-        }
-        &--open{
-            transform: scaleY(1) scaleX(1) translateY(0);
-            transition: 1s ease-out;
-        }
-        &--closed{
-            transform: scaleY(0) scaleX(2) skewY(20deg) translateY(-200px);
-            transition: 1s ease-in;
-        }
+    width: calc(100vw - 20px);
+    top: 0;
+    background-color: $diologue-bg-primary;
+    text-align: center;
+    padding: 10px;
+    h1 {
+        color: $diologue-primary;
+        font-size: max(3rem, 5vw);
+        background-color: $diologue-bg-secondary;
+        border-radius: 10px;
+        margin-bottom: 10px;
     }
-    &__diologue {
-        position: absolute;
-        bottom: 0;
-        background-color: $diologue-bg-primary;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        gap: 10px;
-        padding: 20px 10vw 50px;
-        width: 80vw;
-        cursor: pointer;
-        span {
-            display: flex;
-            background-color: $diologue-bg-secondary;
-            align-items: end;
-            height: 50px;
-            gap: 10px;
-            border-radius: 10px;
-            padding: 10px;
-            img {
-                border-radius: inherit;
-                width: 50px;
-                height: 50px;
-            }
-            h1 {
-                color: $diologue-secondary;
-                font-size: 2rem;
-            }
-        }
-        p {
-            border-radius: 10px;
-            padding: 10px;
-            background-color: $diologue-bg-secondary;
-            color: $diologue-primary;
-            width: 100%;
-            overflow: hidden;
-            font-size: max(1.5rem, 2vw);
-        }
-        &--open{
-            transform: scaleY(1) scaleX(1) translateY(0);
-            transition: 1s ease-out;
-        }
-        &--closed{
-            transform: scaleY(0) scaleX(2) skewY(-20deg) translateY(200px);
-            transition: 1s ease-in;
-        }
+    p {
+        color: $diologue-secondary;
+        font-size: max(1.5rem, 2vw);
+        background-color: $diologue-bg-secondary;
+        border-radius: 10px;
+    }
+    &--open{
+        transform: scaleY(1) scaleX(1) translateY(0);
+        transition: 1s ease-out;
+    }
+    &--closed{
+        transform: scaleY(0) scaleX(2) skewY(20deg) translateY(-200px);
+        transition: 1s ease-in;
     }
 }
-.inventory {
+.diologue {
     position: absolute;
-    left: 0;
-    width: 200px;
-    height: 100vh;
+    bottom: 0;
+    background-color: $diologue-bg-primary;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-left: 10px;
-    &__backpack{
-        width: 200px;
+    align-items: start;
+    gap: 10px;
+    padding: 20px 10vw 50px;
+    width: 80vw;
+    cursor: pointer;
+    span {
+        display: flex;
+        background-color: $diologue-bg-secondary;
+        align-items: end;
+        height: 50px;
+        gap: 10px;
+        border-radius: 10px;
+        padding: 10px;
         img {
-            position: absolute;
-            width: 200px;
+            border-radius: inherit;
+            width: 50px;
+            height: 50px;
         }
-        &__slots {
-            position: relative;
-            top: 50px;
-            left: 30px;
-            width: 100px;
-            height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
+        h1 {
+            color: $diologue-secondary;
+            font-size: 2rem;
         }
+    }
+    p {
+        border-radius: 10px;
+        padding: 10px;
+        background-color: $diologue-bg-secondary;
+        color: $diologue-primary;
+        width: 100%;
+        overflow: hidden;
+        font-size: max(1.5rem, 2vw);
+    }
+    &--open{
+        transform: scaleY(1) scaleX(1) translateY(0);
+        transition: 1s ease-out;
+    }
+    &--closed{
+        transform: scaleY(0) scaleX(2) skewY(-20deg) translateY(200px);
+        transition: 1s ease-in;
+    }
+}
+.backpack{
+    cursor: grab;
+    width: 200px;
+    position: absolute;
+    display: block;
+    img {
+        position: absolute;
+        width: 200px;
+        display: block;
+    }
+    &__slots {
+        position: relative;
+        top: 50px;
+        left: 40px;
+        width: 100px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        
+    }
+    &--closed {
+        transform: translateX(-100px) rotateZ(90deg);
+        transition: 1s ease-out;
+    }
+    &--open {
+        transition: 1s ease-out;
     }
 }
 .background {
@@ -146,4 +141,22 @@ h1, p {
         height: 100%;
         object-fit: cover;
     }
+}
+.hand {
+    position: absolute;
+    right: 0;
+    width: 100px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
+}
+.snowstorm {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    pointer-events: none;
 }
