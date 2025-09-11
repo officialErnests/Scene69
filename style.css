@@ -1,7 +1,8 @@
 body {
   background-color: #d8d8d8;
   margin: 0;
-  height: 100hv;
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
   transition: 1s;
 }
@@ -126,6 +127,29 @@ h1, p {
   transition: 1s ease-out;
 }
 
+.interactables {
+  z-index: -5;
+  width: 100vw;
+  height: calc(100vh - 20px);
+  padding-top: 10px;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+}
+.interactables__slot {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.interactables__slot img {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  height: initial;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .background {
   width: 100vw;
   height: 100vh;
@@ -133,6 +157,7 @@ h1, p {
   z-index: -10;
 }
 .background img {
+  position: absolute;
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
@@ -142,8 +167,9 @@ h1, p {
 .hand {
   position: absolute;
   right: 0;
+  bottom: 0;
   width: 100px;
-  height: 100vh;
+  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;

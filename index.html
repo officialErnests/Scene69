@@ -13,20 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@700&family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="place place--closed" id="place">
-        <h1>The Best of All Possible Snowdrifts</h1>
-        <p>it is forever snowing in here so grab some hot choclet and enjoy the view :DD</p>
-    </div>
-    <div class="diologue diologue--closed" id="diologue">
-        <span>
-            <img src="xcf/diologue_test.png" alt="some random">
-            <h1>Name of speaker</h1>
-        </span>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic voluptas dolorum, laudantium minima sapiente eveniet animi culpa sint ad pariatur aliquam ipsam cum ut eos fuga maxime aperiam vel tempore.
-        </p>
-    </div>
-
+    <!-- z 20 -->
     <div class="backpack backpack--closed" id="backpack">
         <img src="xcf/prototype1_backpack_closed.png" alt="backpack" id="backpack_img">
         <div class="backpack__slots" id="backpack_slot_holder">
@@ -38,13 +25,49 @@
             <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
         </div>
     </div>
+    <!-- z 18 -->
     <div class="hand">
         <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
     </div>
+    <!-- z 15 -->
+    <div class="diologue diologue--closed" id="diologue">
+        <span>
+            <img src="xcf/diologue_test.png" alt="some random">
+            <h1>Name of speaker</h1>
+        </span>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic voluptas dolorum, laudantium minima sapiente eveniet animi culpa sint ad pariatur aliquam ipsam cum ut eos fuga maxime aperiam vel tempore.
+        </p>
+    </div>
+    <!-- z 10 -->
+    <div class="place place--closed" id="place">
+        <h1>The Best of All Possible Snowdrifts</h1>
+        <p>it is forever snowing in here so grab some hot choclet and enjoy the view :DD</p>
+    </div>
+    <!-- z 5 -->
+    <canvas class="snowstorm" width="640" height="320" id="snowstorm"></canvas>
+    <!-- z -5 -->
+    <div class="interactables">
+        <div class="interactables__slot">
+            <img src="xcf/prototype1_outside_snowmobile_interact.png" alt="Snowmobile">
+        </div>
+        <div class="interactables__slot">
+            <img src="xcf/prototype1_outside_shop.png" alt="Shop">
+            <img src="xcf/prototype1_outside_shop_interact.png" alt="Shop door">
+        </div>
+        <div class="interactables__slot">
+
+            <img src="xcf/prototype1_outside_tower.png" alt="Tower">
+            <img src="xcf/prototype1_outside_tower_interact.png" acalc(100vh - 20px)lt="Tower ladder">
+        </div>
+        <div class="interactables__slot">
+            <img src="xcf/prototype1_outside_guide_interact.png" alt="Guid">
+        </div>
+    </div>
+    <!-- z -10 -->
     <div class="background">
         <img src="xcf/prototype1_bgsnow.png" alt="snow">
     </div>
-    <canvas class="snowstorm" width="640" height="320" id="snowstorm"></canvas>
     <script src="main.js"></script>
 </body>
 </html>

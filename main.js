@@ -38,7 +38,7 @@ let held_slot = 0
 slotsInit()
 setTimeout(openPlace, 1000)
 snow()
-openDiologue()
+// openDiologue()
 backpack.addEventListener('click', processBackpack)
 
 
