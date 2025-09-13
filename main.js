@@ -15,8 +15,8 @@ class snowparticle {
         this.velocity = velocity
         this.radius = radius
         this.stage = 0
-        this.progressTimer = Math.random() * 100
-        this.sizeVel = Math.random() * 0.003
+        this.progressTimer = Math.random() * 100 + 10
+        this.sizeVel = Math.random() * 0.005
         this.acelar = Math.random() * 0.1 - 0.05
     }
     tick() {
@@ -146,22 +146,30 @@ async function snow() {
         timer2 += 0.01
         // canvas.width = window.screen.width / window.screen.height * 1000
         canvas.height = window.innerHeight / window.innerWidth * 1000
-        for (let index = 0; index < 100 - snow.length; index++) {
-            let random_x = Math.random() * 640 -640
-            let random_Y = Math.random() * window.innerHeight / window.innerWidth * 1000 - window.innerHeight / window.innerWidth * 1000
+        let repeat = 1000 - snow.length
+        if (1000 - snow.length > 50) {repeat = 50}
+        for (let index = 0; index < repeat; index++) {
             // let random_x = Math.random() * 640
             // let random_Y = Math.random() * window.innerHeight / window.innerWidth * 1000
-            if (Math.floor(Math.random()*2))
             let random_speed_x = Math.random() * 10 + 1
-            let random_speed_y = Math.random() * 5 + 2
+            let random_speed_y = Math.random() * 10 + 2
+            let random_x = 0
+            let random_Y = 0
+            let random_rad = Math.random()*0.5+0.5
+            if (Math.floor(Math.random()*2) == 0) {
+                random_x = -640 - random_rad
+                random_Y = Math.random() * (window.innerHeight / window.innerWidth * 1000) - (window.innerHeight / window.innerWidth * 1000)
+            } else {
+                random_x = Math.random() * 640 - 640
+                random_Y = -(window.innerHeight / window.innerWidth * 1000) - random_rad
+            }
             // context.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.globalAlpha = Math.sin(timer2)/4+0.7;
             snow.unshift(new snowparticle(ctx, [random_x,random_Y], [random_speed_x,random_speed_y], Math.random()*0.5+0.5))  
         }
         for (let index = 0; index < snow.length; index++) {
             const element = snow[index];
-            if (!element.tick() && index == 0) {
-                snow.shift()
+            if (!element.tick() && index == snow.length - 1) {
+                snow.pop()
                 index -= 1
             }
         }
@@ -170,6 +178,7 @@ async function snow() {
 function drawSnowball(ctx, pos, radius, stage) {
     var temp = getAsset(0,stage)
     ctx.imageSmoothingEnabled = false;
+    ctx.globalAlpha = 1-((stage - 5) / 10);
     ctx.drawImage(img_assets_1, temp[0], temp[1], temp[2], temp[3], pos[0], pos[1], 64 * radius, 64 * radius)
     // ctx.beginPath();
     // ctx.arc(pos[0], pos[1], radius, 0, 2 * Math.PI);
