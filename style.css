@@ -139,6 +139,7 @@ h1, p {
   z-index: -5;
   -o-object-fit: contain;
      object-fit: contain;
+  transition: 0;
 }
 .mainScene--img {
   position: absolute;
@@ -149,20 +150,29 @@ h1, p {
   top: 0;
   left: 0;
 }
-.mainScene--door_outside {
-  transform: translateX(47vw) translateY(40vh);
-  width: 0;
-  height: 0;
+.mainScene__center {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.mainScene--door_outside img {
-  transform: translateX(-50%) translateY(-50%);
-  width: 10vw;
+.mainScene__center__center {
+  width: 100vw;
+  height: 56.8421052618vw;
 }
 @media (min-aspect-ratio: 95/54) {
-  .mainScene--door_outside img {
-    height: 20vh;
-    width: auto;
+  .mainScene__center__center {
+    width: 175.92592593vh;
+    height: 100vh;
   }
+}
+.mainScene__center__center--doorOutside {
+  transform: translateX(700%) translateY(180%);
+  width: 7%;
+  height: auto;
+  cursor: grab;
 }
 
 .hand {

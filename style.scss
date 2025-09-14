@@ -145,6 +145,7 @@ h1, p {
     height: 100vh;
     z-index: -5;
     object-fit: contain;
+    transition: 0;
     &--img {
         position: absolute;
         width: 100vw;
@@ -153,30 +154,30 @@ h1, p {
         top: 0;
         left: 0;
     }
-    &--door_outside {
-        transform: translateX(47vw) translateY(40vh);
-        width: 0;
-        height: 0;
-        img{
-            transform: translateX(-50%) translateY(-50%);
-            width: 10vw;
+    &__center {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        // flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &__center{
+            // z-index: -4;
+            width: 100vw;
+            height: calc(100vw / 1.7592592593);
+            // background-color: violet;
             @media (min-aspect-ratio : 95/54) {
-                height: 20vh;
-                width: auto;
+                width: calc(100vh * 1.7592592593);
+                height: 100vh;
+            }
+            &--doorOutside{
+                transform: translateX(700%) translateY(180%);
+                width: 7%;
+                height: auto;
+                cursor: grab;
             }
         }
-        // object-fit: contain;
-        // position: absolute;
-        // width:10vw;
-        // height: auto;
-        // top: 0;
-        // left: 0;
-        // object-fit: contain;
-        // @media (min-aspect-ratio : 95/54) {
-        //     height: 25vh;
-        //     width: auto;
-        //     transform: translateX(53vw) translateY(calc(40vh - 12.5vh));
-        // }
     }
 }
 .hand {
