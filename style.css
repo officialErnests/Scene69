@@ -133,16 +133,36 @@ h1, p {
 }
 
 .mainScene {
-  position: absolute;
+  position: relative;
   width: 100vw;
   height: 100vh;
   z-index: -5;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 .mainScene--img {
+  position: absolute;
   width: 100vw;
   height: 100vh;
   -o-object-fit: contain;
      object-fit: contain;
+  top: 0;
+  left: 0;
+}
+.mainScene--door_outside {
+  transform: translateX(47vw) translateY(40vh);
+  width: 0;
+  height: 0;
+}
+.mainScene--door_outside img {
+  transform: translateX(-50%) translateY(-50%);
+  width: 10vw;
+}
+@media (min-aspect-ratio: 95/54) {
+  .mainScene--door_outside img {
+    height: 20vh;
+    width: auto;
+  }
 }
 
 .hand {

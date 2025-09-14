@@ -15,8 +15,8 @@ class snowparticle {
         this.velocity = velocity
         this.radius = radius
         this.stage = 0
-        this.progressTimer = Math.random() * 100 + 10
-        this.sizeVel = Math.random() * 0.005
+        this.progressTimer = Math.random() * 30 + 10
+        this.sizeVel = Math.random() * 0.01
         this.acelar = Math.random() * 0.1 - 0.05
     }
     tick() {
@@ -28,7 +28,7 @@ class snowparticle {
         }
         this.progressTimer -= 1
         if (this.progressTimer <= 0) {
-            this.progressTimer = 5
+            this.progressTimer = 20
             switch (this.stage) {
                 case 0:
                     this.stage = 1
@@ -43,11 +43,11 @@ class snowparticle {
                     this.stage = Math.floor(Math.random()*4+3) 
                     break;
                 default:
-                    // this.stage = Math.floor(Math.random()*4+3) 
+                    this.stage = Math.floor(Math.random()*4+3) 
                     break;
             }
         }
-        drawSnowball(this.ctx, this.position, this.radius, this.stage + 5)
+        drawSnowball(this.ctx, this.position, this.radius , this.stage + 5)
         this.position[0] += this.velocity[0]
         this.position[1] += this.velocity[1]
         this.velocity[0] += this.acelar
@@ -138,21 +138,24 @@ function slotClicked () {
 async function snow() {
     const canvas = document.getElementById("snowstorm");
     const ctx = canvas.getContext("2d");
-    let snow = []
-    const context = canvas.getContext('2d');
+    let snowball = []
     let timer2 = 0
+    let inx = 0
     while (true) {
-        await timer(10)
-        timer2 += 0.01
-        // canvas.width = window.screen.width / window.screen.height * 1000
+        await timer(30)
+        timer2 += 1
         canvas.height = window.innerHeight / window.innerWidth * 1000
-        let repeat = 1000 - snow.length
-        if (1000 - snow.length > 50) {repeat = 50}
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (timer2 % 2 == 0) {
+        }
+        // canvas.width = window.screen.width / window.screen.height * 1000
+        let repeat = 500 - snowball.length
+        if (500 - snowball.length > 50) {repeat = 50}
         for (let index = 0; index < repeat; index++) {
             // let random_x = Math.random() * 640
             // let random_Y = Math.random() * window.innerHeight / window.innerWidth * 1000
-            let random_speed_x = Math.random() * 10 + 1
-            let random_speed_y = Math.random() * 10 + 2
+            let random_speed_x = Math.random() * 20 + 1
+            let random_speed_y = Math.random() * 20 + 8
             let random_x = 0
             let random_Y = 0
             let random_rad = Math.random()*0.5+0.5
@@ -163,14 +166,12 @@ async function snow() {
                 random_x = Math.random() * 640 - 640
                 random_Y = -(window.innerHeight / window.innerWidth * 1000) - random_rad
             }
-            // context.clearRect(0, 0, canvas.width, canvas.height);
-            snow.unshift(new snowparticle(ctx, [random_x,random_Y], [random_speed_x,random_speed_y], Math.random()*0.5+0.5))  
+            snowball.unshift(new snowparticle(ctx, [random_x,random_Y], [random_speed_x,random_speed_y], Math.random()*0.1+0.2))  
         }
-        for (let index = 0; index < snow.length; index++) {
-            const element = snow[index];
-            if (!element.tick() && index == snow.length - 1) {
-                snow.pop()
-                index -= 1
+        for (let index = snowball.length -1; index >= 0; index--) {
+            const element = snowball[index];
+            if (!element.tick() && index == snowball.length - 1) {
+                snowball.pop()
             }
         }
     }
@@ -178,8 +179,9 @@ async function snow() {
 function drawSnowball(ctx, pos, radius, stage) {
     var temp = getAsset(0,stage)
     ctx.imageSmoothingEnabled = false;
-    ctx.globalAlpha = 1-((stage - 5) / 10);
+    ctx.globalAlpha = 1-((stage - 3) / 10);
     ctx.drawImage(img_assets_1, temp[0], temp[1], temp[2], temp[3], pos[0], pos[1], 64 * radius, 64 * radius)
+    // ctx.drawImage(img_assets_1, temp[0], temp[1], temp[2], temp[3], Math.round(pos[0]/5)*5, Math.round(pos[1]/10)*10, 64 * radius, 64 * radius)
     // ctx.beginPath();
     // ctx.arc(pos[0], pos[1], radius, 0, 2 * Math.PI);
     // ctx.fillStyle = "white";

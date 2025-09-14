@@ -140,14 +140,43 @@ h1, p {
     }
 }
 .mainScene {
-    position: absolute;
+    position: relative;
     width: 100vw;
     height: 100vh;
     z-index: -5;
+    object-fit: contain;
     &--img {
+        position: absolute;
         width: 100vw;
         height: 100vh;
         object-fit: contain;
+        top: 0;
+        left: 0;
+    }
+    &--door_outside {
+        transform: translateX(47vw) translateY(40vh);
+        width: 0;
+        height: 0;
+        img{
+            transform: translateX(-50%) translateY(-50%);
+            width: 10vw;
+            @media (min-aspect-ratio : 95/54) {
+                height: 20vh;
+                width: auto;
+            }
+        }
+        // object-fit: contain;
+        // position: absolute;
+        // width:10vw;
+        // height: auto;
+        // top: 0;
+        // left: 0;
+        // object-fit: contain;
+        // @media (min-aspect-ratio : 95/54) {
+        //     height: 25vh;
+        //     width: auto;
+        //     transform: translateX(53vw) translateY(calc(40vh - 12.5vh));
+        // }
     }
 }
 .hand {
