@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@700&family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- z 40 -->
+    <div class="tranistion" id="tranistion"></div>
     <!-- z 20 -->
     <div class="backpack backpack--closed" id="backpack">
         <img src="xcf/prototype1_backpack_closed.png" alt="backpack" id="backpack_img">
@@ -41,17 +43,20 @@
     </div>
     <!-- z 10 -->
     <div class="place place--closed" id="place">
-        <h1>The Best of All Possible Snowdrifts</h1>
-        <p>it is forever snowing in here so grab some hot choclet and enjoy the view :DD</p>
+        <h1></h1>
+        <p></p>
     </div>
     <!-- z 5 -->
     <canvas class="snowstorm" width="640" height="320" id="snowstorm"></canvas>
     <!-- z -5 -->
     <div class="mainScene">
-        <img src="xcf/V1_Town_shop_view.png" alt="Shop view" class="mainScene--img">
+        <img src="xcf/V1_Town_shop_view.png" alt="Shop view" class="mainScene--img" id="mainScene">
         <div class="mainScene__center">
             <div class="mainScene__center__center">
-                <img src="xcf/prototype1_outside_shop_interact.png" alt="Shop view" class="mainScene__center__center--doorOutside">
+                <img src="xcf/prototype1_outside_shop_interact.png" alt="Shop view" class="mainScene__center__center--interactable mainScene__center__center--doorOutside">
+                <img src="xcf/prototype1_outside_tower_interact.png" alt="Ladder" class="mainScene__center__center--interactable mainScene__center__center--ladderOutside">
+                <img src="xcf/prototype1_outside_snowmobile_interact.png" alt="snow mobile" class="mainScene__center__center--interactable mainScene__center__center--snowMobile">
+                <img src="xcf/prototype1_outside_guide_interact.png" alt="guid" class="mainScene__center__center--interactable mainScene__center__center--guid_outside">
             </div>
         </div>
     </div>

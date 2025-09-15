@@ -19,6 +19,19 @@ h1, p {
   font-style: normal;
 }
 
+.tranistion {
+  position: absolute;
+  z-index: 40;
+  background-color: black;
+  transition: 1s;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+.tranistion--hidden {
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .place {
   z-index: 10;
   position: absolute;
@@ -27,6 +40,7 @@ h1, p {
   background-color: rgba(0, 0, 0, 0.4117647059);
   text-align: center;
   padding: 10px;
+  pointer-events: none;
 }
 .place h1 {
   color: #ffffff;
@@ -106,6 +120,7 @@ h1, p {
   position: absolute;
   display: block;
   z-index: 20;
+  bottom: 0;
 }
 .backpack img {
   position: absolute;
@@ -125,10 +140,11 @@ h1, p {
   flex-wrap: wrap;
 }
 .backpack--closed {
-  transform: translateX(-100px) rotateZ(90deg);
+  transform: translateX(-130px) rotateZ(90deg);
   transition: 1s ease-out;
 }
 .backpack--open {
+  transform: translateY(-100px);
   transition: 1s ease-out;
 }
 
@@ -159,6 +175,7 @@ h1, p {
   align-items: center;
 }
 .mainScene__center__center {
+  position: relative;
   width: 100vw;
   height: 56.8421052618vw;
 }
@@ -168,11 +185,31 @@ h1, p {
     height: 100vh;
   }
 }
+.mainScene__center__center--interactable {
+  height: auto;
+  position: absolute;
+  cursor: grab;
+}
+.mainScene__center__center--interactable:hover {
+  filter: drop-shadow(0px 0px 10px #eeff00);
+}
 .mainScene__center__center--doorOutside {
   transform: translateX(700%) translateY(180%);
   width: 7%;
-  height: auto;
-  cursor: grab;
+}
+.mainScene__center__center--ladderOutside {
+  transform: translateX(900%) translateY(0%);
+  width: 8%;
+  height: 70%;
+}
+.mainScene__center__center--snowMobile {
+  transform: translateX(0%) translateY(300%) rotateZ(-10deg);
+  width: 15%;
+  height: 18%;
+}
+.mainScene__center__center--guid_outside {
+  transform: translateX(1100%) translateY(200%);
+  width: 8%;
 }
 
 .hand {
@@ -186,6 +223,9 @@ h1, p {
   align-items: center;
   justify-content: center;
   padding-right: 10px;
+  z-index: 18;
+}
+.hand img {
   z-index: 18;
 }
 

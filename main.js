@@ -3,11 +3,24 @@ let diologue = document.getElementById("diologue")
 let backpack = document.getElementById("backpack")
 let backpack_img = document.getElementById("backpack_img")
 let inv_slots = document.getElementsByClassName("inv_slot")
+var snowing = false
+var scene = "opening"
+var tranisition_screen = document.getElementById("tranistion")
+var scene_timeout_id = null
+var mainScene_img = document.getElementById("mainScene")
+var body = document.body
 const timer = ms => new Promise(res => setTimeout(res, ms))
 const img_assets_1 = new Image(192, 128)
 img_assets_1.src = "xcf/V1_SnowAssets_1.png"
-
-
+let interactables = {
+    "outside_door" : document.getElementsByClassName("mainScene__center__center--doorOutside")[0],
+    "ladder_outside" : document.getElementsByClassName("mainScene__center__center--ladderOutside")[0],
+    "snow_mobile" : document.getElementsByClassName("mainScene__center__center--snowMobile")[0],
+    "guid_outside" : document.getElementsByClassName("mainScene__center__center--guid_outside")[0],
+}
+var audio = new Audio('music/C0ZYE5TC0LD.ogg');
+audio.play();
+audio.addEventListener("ended", () => {audio.play()})
 class snowparticle {
     constructor (ctx, spawn, velocity, radius) {
         this.ctx = ctx
@@ -61,24 +74,119 @@ let backpack_open = false
 let backpack_slots = [0,0,0,0,0,0]
 let held_slot = 0
 
-
 //init
-slotsInit()
-setTimeout(openPlace, 1000)
 snow()
-// openDiologue()
+slotsInit()
+transition()
 backpack.addEventListener('click', processBackpack)
+//starts main functional manager
+switchScene("opening")
 
-
+//Scene manager
+function switchScene(scene_to_load) {
+    //loads next one riiiiight up ::DD
+    scene = scene_to_load
+    let scene_name
+    let scene_description
+    switch (scene) {
+        case "opening":
+            //sets scene
+            mainScene_img.src = "xcf/V1_Town_shop_view.png"
+            body.style.backgroundImage = "url('xcf/V1_Town_shop_view.png')"
+            scene_name = "The Best of All Possible Snowdrifts"
+            scene_description = "it is forever snowing in here so grab some hot choclet and enjoy the view :DD"
+            setTimeout(openPlace, 1000, scene_name, scene_description)
+            //sets snowoe :DD
+            snowing = true
+            //shows all assets
+            showScene()
+            //sets up all events (like interactables)
+            interactables["outside_door"].addEventListener("click", interactionLisener_switch.bind(null, "shop_shopkeep"))
+            break;
+        case "shop_shopkeep":
+            //sets scene
+            mainScene_img.src = "xcf/V1_Shop_view.png"
+            body.style.backgroundImage = "url('xcf/V1_Shop_view.png')"
+            scene_name = "The Shop Keep"
+            scene_description = "As you enter a warm gust goes your way :))"
+            setTimeout(openPlace, 1000, scene_name, scene_description)
+            //sets snowoe :DD
+            snowing = false
+            //sets up all events (like interactables)
+            break;
+        default:
+            break;
+    }
+    interactables
+}
+function disableScene() {
+    //deloads previous scene
+    switch (scene) {
+        case "opening":
+            interactables["outside_door"].removeEventListener("click", interactionLisener_switch)
+            break;
+        default:
+            break;
+    }
+}
+function showScene() {
+    //shows new assets
+    switch (scene) {
+        case "opening":
+            interactables["outside_door"].hidden = false
+            interactables["ladder_outside"].hidden = false
+            interactables["snow_mobile"].hidden = false
+            interactables["guid_outside"].hidden = false
+            //disables intractables
+            break;
+        default:
+            break;
+    }
+}
+function hideScene() {
+    //hides prev assets
+    switch (scene) {
+        case "opening":
+            interactables["outside_door"].hidden = true
+            interactables["ladder_outside"].hidden = true
+            interactables["snow_mobile"].hidden = true
+            interactables["guid_outside"].hidden = true
+            //disables intractables
+            break;
+        default:
+            break;
+    }
+}
+//Transition
+async function transition() {
+    tranisition_screen.classList.remove("tranistion--hidden")
+    setTimeout(() => {
+        tranisition_screen.classList.add("tranistion--hidden")
+    }, 1000);
+}
+//Interaction listeners
+function interactionLisener_switch(nextScene, event) {
+    disableScene()
+    transition()
+    closePlace()
+    setTimeout(() => {
+        hideScene()
+        switchScene(nextScene)
+    }, 1000);
+} 
 //Place
 function closePlace() {
+    clearTimeout(scene_timeout_id)
     place.classList.remove("place--open")
     place.classList.add("place--closed")
 }
-function openPlace() {
-    place.classList.add("place--open")
+function openPlace(placeName, placeDescription) {
     place.classList.remove("place--closed")
-    setTimeout(closePlace, 1000 + 10000); //1000 is for opening anim ;;))
+    place.classList.add("place--open")
+    
+    place.getElementsByTagName("h1")[0].textContent = placeName
+    place.getElementsByTagName("p")[0].textContent = placeDescription
+    scene_timeout_id = setTimeout(closePlace, 1000 + 10000); //1000 is for opening anim ;;))
 }
 //Diologue
 function closeDiologue() {
@@ -142,6 +250,11 @@ async function snow() {
     let timer2 = 0
     let inx = 0
     while (true) {
+        if (!snowing){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            await timer(100)
+            continue
+        }
         await timer(30)
         timer2 += 1
         canvas.height = window.innerHeight / window.innerWidth * 1000
