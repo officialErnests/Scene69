@@ -19,7 +19,7 @@ let interactables = {
     "guid_outside" : document.getElementsByClassName("mainScene__center__center--guid_outside")[0],
 }
 var audio = new Audio('music/C0ZYE5TC0LD.ogg');
-audio.play();
+
 audio.addEventListener("ended", () => {audio.play()})
 class snowparticle {
     constructor (ctx, spawn, velocity, radius) {
@@ -77,11 +77,16 @@ let held_slot = 0
 //init
 snow()
 slotsInit()
-transition()
 backpack.addEventListener('click', processBackpack)
 //starts main functional manager
-switchScene("opening")
-
+window.addEventListener("click", startGame);
+function startGame() {
+    window.removeEventListener("click", startGame)
+    document.getElementsByClassName("TEMP")[0].hidden = true
+    audio.play()
+    transition()
+    switchScene("opening")
+}
 //Scene manager
 function switchScene(scene_to_load) {
     //loads next one riiiiight up ::DD

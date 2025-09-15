@@ -19,6 +19,14 @@ h1, p {
   font-style: normal;
 }
 
+.TEMP {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  z-index: 50;
+}
+
 .tranistion {
   position: absolute;
   z-index: 40;
