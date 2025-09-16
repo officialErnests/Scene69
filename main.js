@@ -96,6 +96,9 @@ function startGame() {
             element.classList.add("startPopup--hidden")
         }
         document.getElementsByClassName("startPopup")[1].classList.add("startPopup--hidden")
+        for (const element of document.getElementsByClassName("startLinks")) {
+            element.classList.add("startPopup--hidden")
+        }
     }, 1000);
 }
 //Scene manager
