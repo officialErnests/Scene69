@@ -3,15 +3,17 @@ let diologue = document.getElementById("diologue")
 let backpack = document.getElementById("backpack")
 let backpack_img = document.getElementById("backpack_img")
 let inv_slots = document.getElementsByClassName("inv_slot")
-var snowing = false
+var snowing = true
 var scene = "opening"
 var tranisition_screen = document.getElementById("tranistion")
+var backtrack = document.getElementById("backtrack")
 var scene_timeout_id = null
 var mainScene_img = document.getElementById("mainScene")
 var body = document.body
 const timer = ms => new Promise(res => setTimeout(res, ms))
 const img_assets_1 = new Image(192, 128)
 img_assets_1.src = "xcf/V1_SnowAssets_1.png"
+var seitchingscenes = false
 let interactables = {
     "outside_door" : document.getElementsByClassName("mainScene__center__center--doorOutside")[0],
     "ladder_outside" : document.getElementsByClassName("mainScene__center__center--ladderOutside")[0],
@@ -77,15 +79,24 @@ let held_slot = 0
 //init
 snow()
 slotsInit()
-backpack.addEventListener('click', processBackpack)
 //starts main functional manager
-window.addEventListener("click", startGame);
+// window.addEventListener("click", startGame);
 function startGame() {
+    body.style.overflow = "hidden"
+    window.scrollTo(0,0)
+    backpack.addEventListener('click', processBackpack)
+    backtrack.addEventListener('click', backtrack_func)
     window.removeEventListener("click", startGame)
-    document.getElementsByClassName("TEMP")[0].hidden = true
     audio.play()
     transition()
     switchScene("opening")
+    setTimeout(() => {
+        document.getElementsByClassName("startPopup")[0].classList.add("startPopup--hidden")
+        for (const element of document.getElementsByClassName("startPopup")[0].children) {
+            element.classList.add("startPopup--hidden")
+        }
+        document.getElementsByClassName("startPopup")[1].classList.add("startPopup--hidden")
+    }, 1000);
 }
 //Scene manager
 function switchScene(scene_to_load) {
@@ -162,15 +173,45 @@ function hideScene() {
             break;
     }
 }
+//Backtrack
+function backtrack_func() {
+    if (seitchingscenes) {
+        return
+    }
+    
+    switch (scene) {
+        case "opening":
+            disableScene()
+            transition()
+            closePlace()
+            setTimeout(() => {
+                hideScene()
+                switchScene("Cave")
+            }, 1000);
+        case "shop_shopkeep":
+            disableScene()
+            transition()
+            closePlace()
+            setTimeout(() => {
+                hideScene()
+                switchScene("opening")
+            }, 1000);
+        default:
+            break;
+    }
+}
 //Transition
 async function transition() {
+    seitchingscenes = true
     tranisition_screen.classList.remove("tranistion--hidden")
     setTimeout(() => {
         tranisition_screen.classList.add("tranistion--hidden")
+        setTimeout(() => {seitchingscenes = false}, 1000);
     }, 1000);
 }
 //Interaction listeners
-function interactionLisener_switch(nextScene, event) {
+function interactionLisener_switch(nextScene) {
+    if (seitchingscenes) {return}
     disableScene()
     transition()
     closePlace()
@@ -268,7 +309,7 @@ async function snow() {
         }
         // canvas.width = window.screen.width / window.screen.height * 1000
         let repeat = 500 - snowball.length
-        if (500 - snowball.length > 50) {repeat = 50}
+        if (500 - snowball.length > 10) {repeat = 10}
         for (let index = 0; index < repeat; index++) {
             // let random_x = Math.random() * 640
             // let random_Y = Math.random() * window.innerHeight / window.innerWidth * 1000

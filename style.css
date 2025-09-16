@@ -1,6 +1,6 @@
 body {
   background-image: url(xcf/V1_Town_shop_view.png);
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   background-size: cover;
   background-position: center;
   -webkit-backdrop-filter: blur(2px) brightness(60%);
@@ -8,15 +8,80 @@ body {
   margin: 0;
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  overflow: scroll;
   transition: 1s;
 }
 
-h1, p {
+h1, h2, p, button {
   margin: 0;
   font-family: "VT323", monospace;
   font-weight: 400;
   font-style: normal;
+}
+
+.startPopup--hidden {
+  pointer-events: none;
+  background-color: transparent !important;
+  color: transparent !important;
+  border-width: 0 !important;
+  transition: 1s !important;
+}
+
+.startText {
+  position: absolute;
+  width: calc(100vw - 100px);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: 60;
+  padding: 50px;
+}
+.startText h1 {
+  padding: 0;
+  margin: 0;
+  filter: opacity(100%);
+  font-size: 6vw;
+  color: #e0e0e0;
+  text-align: center;
+}
+.startText h2 {
+  padding: 0;
+  margin: 0;
+  filter: opacity(100%);
+  font-size: 12vw;
+  border: 10px groove rgb(112, 203, 255);
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.4117647059);
+  text-align: center;
+}
+.startText hr {
+  color: black;
+  border: 10px inset white;
+  width: calc(100% - 20px);
+}
+.startText p {
+  font-size: 2vw;
+  color: #ffffff;
+  text-align: center;
+}
+.startText button {
+  border: none;
+  font-size: 10vw;
+  cursor: pointer;
+}
+
+.startScreen {
+  position: absolute;
+  width: 100vw;
+  height: 1000vh;
+  background-color: rgb(9, 0, 43);
+  filter: opacity(50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
 }
 
 .TEMP {
@@ -129,6 +194,7 @@ h1, p {
   display: block;
   z-index: 20;
   bottom: 0;
+  padding-bottom: 100px;
 }
 .backpack img {
   position: absolute;
@@ -224,17 +290,19 @@ h1, p {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 100px;
-  height: 100px;
+  width: 64px;
+  height: 128px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-right: 10px;
-  z-index: 18;
+  padding-right: 20px;
+  z-index: 0;
+  padding-bottom: 100px;
 }
-.hand img {
+.hand input {
   z-index: 18;
+  cursor: pointer;
 }
 
 .snowstorm {
