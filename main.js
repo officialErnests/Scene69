@@ -7,6 +7,7 @@ var snowing = true
 var scene = "opening"
 var tranisition_screen = document.getElementById("tranistion")
 var backtrack = document.getElementById("backtrack")
+var lookaround = document.getElementById("lookaround")
 var scene_timeout_id = null
 var mainScene_img = document.getElementById("mainScene")
 var body = document.body
@@ -80,7 +81,7 @@ let held_slot = 0
 //init
 snow()
 slotsInit()
-startGame()
+// startGame()
 //starts main functional manager
 // window.addEventListener("click", startGame);
 function startGame() {
@@ -90,6 +91,7 @@ function startGame() {
     body.style.overflow = "hidden"
     backpack.addEventListener('click', processBackpack)
     backtrack.addEventListener('click', backtrack_func)
+    lookaround.addEventListener('click', lookarounb_func)
     window.removeEventListener("click", startGame)
     audio.play()
     transition()
@@ -134,7 +136,7 @@ function switchScene(scene_to_load) {
             mainScene_img.src = "xcf/v1_shop_shop_back.png"
             body.style.backgroundImage = "url('xcf/v1_shop_shop_back.png')"
             scene_name = "The Shop Keep"
-            scene_description = "As you enter a warm gust goes your way :))"
+            scene_description = "As you enter, you can notice how warm it is in here :))"
             setTimeout(openPlace, 1000, scene_name, scene_description)
             //sets snowoe :DD
             snowing = false
@@ -147,6 +149,18 @@ function switchScene(scene_to_load) {
             body.style.backgroundImage = "url('xcf/v1_tower_view.png')"
             scene_name = "The great view"
             scene_description = "Whow, from up here you can see till The Great Frozen Wall (scene 73) :OO"
+            setTimeout(openPlace, 1000, scene_name, scene_description)
+            //sets snowoe :DD
+            snowing = false
+            //shows all assets
+            showScene()
+            break;
+        case "shop_view":
+            //sets scene
+            mainScene_img.src = "xcf/v1_shop_view.png"
+            body.style.backgroundImage = "url('xcf/v1_shop_view.png')"
+            scene_name = "Shop window"
+            scene_description = "It's pretty chill in shop :))"
             setTimeout(openPlace, 1000, scene_name, scene_description)
             //sets snowoe :DD
             snowing = false
@@ -181,6 +195,7 @@ function showScene() {
             break;
         case "shop_shopkeep":
             interactables["shop_front"].hidden = false
+            break;
         default:
             break;
     }
@@ -197,6 +212,7 @@ function hideScene() {
             break;
         case "shop_shopkeep":
             interactables["shop_front"].hidden = true
+            break;
         default:
             break;
     }
@@ -216,6 +232,7 @@ function backtrack_func() {
                 hideScene()
                 switchScene("Cave")
             }, 1000);
+            break;
         case "shop_shopkeep":
             disableScene()
             transition()
@@ -224,6 +241,7 @@ function backtrack_func() {
                 hideScene()
                 switchScene("opening")
             }, 1000);
+            break;
         case "tower":
             disableScene()
             transition()
@@ -232,6 +250,45 @@ function backtrack_func() {
                 hideScene()
                 switchScene("opening")
             }, 1000);
+            break;
+        case "shop_view":
+            disableScene()
+            transition()
+            closePlace()
+            setTimeout(() => {
+                hideScene()
+                switchScene("opening")
+            }, 1000);
+            break;
+        default:
+            break;
+    }
+}
+//Look around
+function lookarounb_func() {
+    if (seitchingscenes) {
+        return
+    }
+    
+    switch (scene) {
+        case "shop_shopkeep":
+            disableScene()
+            transition()
+            closePlace()
+            setTimeout(() => {
+                hideScene()
+                switchScene("shop_view")
+            }, 1000);
+            break;
+        case "shop_view":
+            disableScene()
+            transition()
+            closePlace()
+            setTimeout(() => {
+                hideScene()
+                switchScene("shop_shopkeep")
+            }, 1000);
+            break;
         default:
             break;
     }
