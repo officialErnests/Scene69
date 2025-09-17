@@ -19,6 +19,7 @@ let interactables = {
     "ladder_outside" : document.getElementsByClassName("mainScene__center__center--ladderOutside")[0],
     "snow_mobile" : document.getElementsByClassName("mainScene__center__center--snowMobile")[0],
     "guid_outside" : document.getElementsByClassName("mainScene__center__center--guid_outside")[0],
+    "shop_front" : document.getElementsByClassName("mainScene__center__center--shop_shop_front")[0],
 }
 var audio = new Audio('music/C0ZYE5TC0LD.ogg');
 
@@ -79,18 +80,23 @@ let held_slot = 0
 //init
 snow()
 slotsInit()
+startGame()
 //starts main functional manager
 // window.addEventListener("click", startGame);
 function startGame() {
+    for (const [key, value] of Object.entries(interactables)) {
+        value.hidden = true
+    }
     body.style.overflow = "hidden"
-    window.scrollTo(0,0)
     backpack.addEventListener('click', processBackpack)
     backtrack.addEventListener('click', backtrack_func)
     window.removeEventListener("click", startGame)
     audio.play()
     transition()
     switchScene("opening")
+    window.scrollTo(0,0)
     setTimeout(() => {
+        window.scrollTo(0,0)
         document.getElementsByClassName("startPopup")[0].classList.add("startPopup--hidden")
         for (const element of document.getElementsByClassName("startPopup")[0].children) {
             element.classList.add("startPopup--hidden")
@@ -121,17 +127,31 @@ function switchScene(scene_to_load) {
             showScene()
             //sets up all events (like interactables)
             interactables["outside_door"].addEventListener("click", interactionLisener_switch.bind(null, "shop_shopkeep"))
+            interactables["ladder_outside"].addEventListener("click", interactionLisener_switch.bind(null, "tower"))
             break;
         case "shop_shopkeep":
             //sets scene
-            mainScene_img.src = "xcf/V1_Shop_view.png"
-            body.style.backgroundImage = "url('xcf/V1_Shop_view.png')"
+            mainScene_img.src = "xcf/v1_shop_shop_back.png"
+            body.style.backgroundImage = "url('xcf/v1_shop_shop_back.png')"
             scene_name = "The Shop Keep"
             scene_description = "As you enter a warm gust goes your way :))"
             setTimeout(openPlace, 1000, scene_name, scene_description)
             //sets snowoe :DD
             snowing = false
-            //sets up all events (like interactables)
+            //shows all assets
+            showScene()
+            break;
+        case "tower":
+            //sets scene
+            mainScene_img.src = "xcf/v1_tower_view.png"
+            body.style.backgroundImage = "url('xcf/v1_tower_view.png')"
+            scene_name = "The great view"
+            scene_description = "Whow, from up here you can see till The Great Frozen Wall (scene 73) :OO"
+            setTimeout(openPlace, 1000, scene_name, scene_description)
+            //sets snowoe :DD
+            snowing = false
+            //shows all assets
+            showScene()
             break;
         default:
             break;
@@ -143,6 +163,7 @@ function disableScene() {
     switch (scene) {
         case "opening":
             interactables["outside_door"].removeEventListener("click", interactionLisener_switch)
+            interactables["ladder_outside"].removeEventListener("click", interactionLisener_switch)
             break;
         default:
             break;
@@ -158,6 +179,8 @@ function showScene() {
             interactables["guid_outside"].hidden = false
             //disables intractables
             break;
+        case "shop_shopkeep":
+            interactables["shop_front"].hidden = false
         default:
             break;
     }
@@ -172,6 +195,8 @@ function hideScene() {
             interactables["guid_outside"].hidden = true
             //disables intractables
             break;
+        case "shop_shopkeep":
+            interactables["shop_front"].hidden = true
         default:
             break;
     }
@@ -192,6 +217,14 @@ function backtrack_func() {
                 switchScene("Cave")
             }, 1000);
         case "shop_shopkeep":
+            disableScene()
+            transition()
+            closePlace()
+            setTimeout(() => {
+                hideScene()
+                switchScene("opening")
+            }, 1000);
+        case "tower":
             disableScene()
             transition()
             closePlace()
