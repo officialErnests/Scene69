@@ -1,5 +1,8 @@
 let place = document.getElementById("place")
 let diologue = document.getElementById("diologue")
+let diologue_img = document.getElementById("diologue_img")
+let diologue_name = document.getElementById("diologue_name")
+let diologue_text = document.getElementById("diologue_text")
 let backpack = document.getElementById("backpack")
 let backpack_img = document.getElementById("backpack_img")
 let inv_slots = document.getElementsByClassName("inv_slot")
@@ -130,6 +133,7 @@ function switchScene(scene_to_load) {
             //sets up all events (like interactables)
             interactables["outside_door"].addEventListener("click", interactionLisener_switch.bind(null, "shop_shopkeep"))
             interactables["ladder_outside"].addEventListener("click", interactionLisener_switch.bind(null, "tower"))
+            interactables["guid_outside"].addEventListener("click", openDiologue.bind(null, "Outside_guid_1"))
             break;
         case "shop_shopkeep":
             //sets scene
@@ -178,6 +182,7 @@ function disableScene() {
         case "opening":
             interactables["outside_door"].removeEventListener("click", interactionLisener_switch)
             interactables["ladder_outside"].removeEventListener("click", interactionLisener_switch)
+            interactables["guid_outside"].removeEventListener("click", openDiologue)
             break;
         default:
             break;
@@ -332,14 +337,22 @@ function closeDiologue() {
     diologue.classList.remove("diologue--open")
     diologue.classList.add("diologue--closed")
     diologue.removeEventListener('click', closeDiologue);
-    setTimeout(openDiologue, 1500);
 }
 function processDiologue() {
     closeDiologue()
 }
-function openDiologue() {
-    diologue.classList.add("diologue--open")
+function openDiologue(id) {
+    switch (id) {
+        case "Outside_guid_1":
+            diologue_img.src = "xcf/diologue_test.png"
+            diologue_name.innerHTML = "Kvaras"
+            diologue_text.innerHTML = "Yo hello, this is test."
+            break;
+        default:
+            break;
+    }
     diologue.classList.remove("diologue--closed")
+    diologue.classList.add("diologue--open")
     diologue.addEventListener('click', processDiologue);
 }
 //Inventory

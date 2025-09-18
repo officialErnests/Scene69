@@ -172,15 +172,6 @@ h1, h2, p, button, a {
   color: #e0e0e0;
   font-size: 2rem;
 }
-.diologue p {
-  border-radius: 10px;
-  padding: 10px;
-  background-color: rgba(105, 105, 105, 0.4117647059);
-  color: #ffffff;
-  width: 100%;
-  overflow: hidden;
-  font-size: max(1.5rem, 2vw);
-}
 .diologue--open {
   transform: scaleY(1) scaleX(1) translateY(0);
   transition: 1s ease-out;
@@ -189,13 +180,37 @@ h1, h2, p, button, a {
   transform: scaleY(0) scaleX(2) skewY(-20deg) translateY(200px);
   transition: 1s ease-in;
 }
+.diologue__text {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+.diologue__text p {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(105, 105, 105, 0.4117647059);
+  color: #ffffff;
+  width: 100%;
+  overflow: hidden;
+  font-size: max(1.5rem, 2vw);
+}
+.diologue__text__buttons {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.diologue__text__buttons button {
+  background-color: rgba(105, 105, 105, 0.4117647059);
+  color: #ffffff;
+  border-radius: 10px;
+}
 
 .backpack {
   cursor: grab;
   width: 200px;
   position: absolute;
   display: block;
-  z-index: 20;
+  z-index: 13;
   bottom: 0;
   padding-bottom: 100px;
 }
