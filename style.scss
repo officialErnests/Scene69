@@ -28,6 +28,58 @@ h1, h2, p, button, a {
     font-weight: 400;
     font-style: normal;
 }
+.holdup {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(9, 0, 43);
+    filter: opacity(90%);
+    z-index: 70;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    h1 {
+        color: $diologue-primary;
+    }
+    h2 {
+        color: $diologue-secondary;
+    }
+    &__buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        a {
+            text-decoration: none;
+            color: $fg-5;
+            background-color: $fg-2;
+            padding: 5px;
+            font-size: 4vw;
+            border: 10px groove $diologue-primary;
+            &:hover {
+                color: black;
+                background-color: white;
+            }
+        }
+        button {
+            text-decoration: none;
+            padding: 5px;
+            background-color: $fg-2;
+            color: $fg-5;
+            font-size: 4vw;
+            background-color: $diologue-secondary;
+            border: 10px groove $diologue-primary;
+            &:hover {
+                color: black;
+                background-color: white;
+            }
+        }
+    }
+    &--hidden {
+        display: none;
+    }
+}
 .startPopup--hidden {
     pointer-events: none;
     background-color: transparent !important;
@@ -192,7 +244,6 @@ h1, h2, p, button, a {
             padding: 10px;
             background-color: $diologue-bg-secondary;
             color: $diologue-primary;
-            width: 100%;
             overflow: hidden;
             font-size: max(1.5rem, 2vw);
         }
@@ -203,6 +254,7 @@ h1, h2, p, button, a {
             button {
                 background-color: $diologue-bg-secondary;
                 color: $diologue-primary;
+                font-size: max(1.5rem, 2vw);
                 border-radius: 10px;
             }
         }

@@ -13,6 +13,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@700&family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- z 70 -->
+    <div class="holdup holdup--hidden" id="holdup">
+        <h1>HOLDUP, you'r about to leave this scene</h1>
+        <h2>And go to [insert next scene :PP]</h2>
+        <h1>Are you sure??</h1>
+        <div class="holdup__buttons">
+            <button onclick="noThanks()"> No, I'll stay!</button>
+            <a href="/scenes/28"> Yes, take me there!</a>
+        </div>
+    </div>
     <!-- z 60 -->
     <calss class="startText startPopup">
         <hr>
@@ -70,9 +80,9 @@
                 AAAAA
             </p>
             <div class="diologue__text__buttons">
-                <button> Test 1</button>
-                <button> Test 2</button>
-                <button> Test 3</button>
+                <button id="dialogue_button_1"> Test 1</button>
+                <button id="dialogue_button_2"> Test 2</button>
+                <button id="dialogue_button_3"> Test 3</button>
             </div>
         </div>
     </div>

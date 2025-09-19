@@ -19,6 +19,59 @@ h1, h2, p, button, a {
   font-style: normal;
 }
 
+.holdup {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(9, 0, 43);
+  filter: opacity(90%);
+  z-index: 70;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.holdup h1 {
+  color: #ffffff;
+}
+.holdup h2 {
+  color: #e0e0e0;
+}
+.holdup__buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+.holdup__buttons a {
+  text-decoration: none;
+  color: #353535;
+  background-color: #c2c2c2;
+  padding: 5px;
+  font-size: 4vw;
+  border: 10px groove #ffffff;
+}
+.holdup__buttons a:hover {
+  color: black;
+  background-color: white;
+}
+.holdup__buttons button {
+  text-decoration: none;
+  padding: 5px;
+  background-color: #c2c2c2;
+  color: #353535;
+  font-size: 4vw;
+  background-color: #e0e0e0;
+  border: 10px groove #ffffff;
+}
+.holdup__buttons button:hover {
+  color: black;
+  background-color: white;
+}
+.holdup--hidden {
+  display: none;
+}
+
 .startPopup--hidden {
   pointer-events: none;
   background-color: transparent !important;
@@ -190,7 +243,6 @@ h1, h2, p, button, a {
   padding: 10px;
   background-color: rgba(105, 105, 105, 0.4117647059);
   color: #ffffff;
-  width: 100%;
   overflow: hidden;
   font-size: max(1.5rem, 2vw);
 }
@@ -202,6 +254,7 @@ h1, h2, p, button, a {
 .diologue__text__buttons button {
   background-color: rgba(105, 105, 105, 0.4117647059);
   color: #ffffff;
+  font-size: max(1.5rem, 2vw);
   border-radius: 10px;
 }
 

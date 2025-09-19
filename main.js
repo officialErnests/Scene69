@@ -14,6 +14,10 @@ var lookaround = document.getElementById("lookaround")
 var scene_timeout_id = null
 var mainScene_img = document.getElementById("mainScene")
 var body = document.body
+var dialogue_button_1 = document.getElementById("dialogue_button_1")
+var dialogue_button_2 = document.getElementById("dialogue_button_2")
+var dialogue_button_3 = document.getElementById("dialogue_button_3")
+var holdup = document.getElementById("holdup")
 const timer = ms => new Promise(res => setTimeout(res, ms))
 const img_assets_1 = new Image(192, 128)
 img_assets_1.src = "xcf/V1_SnowAssets_1.png"
@@ -26,6 +30,7 @@ let interactables = {
     "shop_front" : document.getElementsByClassName("mainScene__center__center--shop_shop_front")[0],
 }
 var audio = new Audio('music/C0ZYE5TC0LD.ogg');
+var dialogue_open = false
 
 audio.addEventListener("ended", () => {audio.play()})
 class snowparticle {
@@ -96,7 +101,12 @@ function startGame() {
     backtrack.addEventListener('click', backtrack_func)
     lookaround.addEventListener('click', lookarounb_func)
     window.removeEventListener("click", startGame)
-    audio.play()
+    try {
+        audio.play()
+    } catch (error) {
+        console.log(error);
+        
+    }
     transition()
     switchScene("opening")
     window.scrollTo(0,0)
@@ -224,7 +234,7 @@ function hideScene() {
 }
 //Backtrack
 function backtrack_func() {
-    if (seitchingscenes) {
+    if (seitchingscenes || dialogue_open) {
         return
     }
     
@@ -271,7 +281,7 @@ function backtrack_func() {
 }
 //Look around
 function lookarounb_func() {
-    if (seitchingscenes) {
+    if (seitchingscenes || dialogue_open) {
         return
     }
     
@@ -309,7 +319,7 @@ async function transition() {
 }
 //Interaction listeners
 function interactionLisener_switch(nextScene) {
-    if (seitchingscenes) {return}
+    if (seitchingscenes || dialogue_open) {return}
     disableScene()
     transition()
     closePlace()
@@ -337,23 +347,98 @@ function closeDiologue() {
     diologue.classList.remove("diologue--open")
     diologue.classList.add("diologue--closed")
     diologue.removeEventListener('click', closeDiologue);
+    dialogue_open = false
 }
-function processDiologue() {
-    closeDiologue()
-}
-function openDiologue(id) {
+function processDiologue(id) {
     switch (id) {
         case "Outside_guid_1":
-            diologue_img.src = "xcf/diologue_test.png"
-            diologue_name.innerHTML = "Kvaras"
-            diologue_text.innerHTML = "Yo hello, this is test."
+            setPrompt("Kvaras",
+                "Well hello there. \nWhat are you doing so far out here?",
+                [
+                    "I'm walking around, taking a stroll in the mountains.",
+                    "Outside_guid_1_1",
+                    "Hello there, i was just trawling around!",
+                    "Outside_guid_1_2",
+                    "Enjoying the view, how about you?",
+                    "Outside_guid_1_3",
+                ]
+            )
             break;
+        case "Outside_guid_1_1":
+            setPrompt("Kvaras",
+                "That's cool, if you'd like i can take you to\
+                Abandoned Polar Bear Breeding Operation.\n\
+                Kinda weird name if you ask me,\
+                but it's quick little hike trogh the mountains!",
+                [
+                    "Oh that sounds lovely, sure!\n\
+                    <b>[Go to Abandoned Polar Bear Breeding Operation]</b>",
+                    "exit_1",
+                    "Hello there, i was just trawling around!",
+                    "Outside_guid_1_2",
+                    "Enjoying the view, how about you?",
+                    "Outside_guid_1_3",
+                ]
+            )
+            break;
+        //exit statments
+        case "exit_1":
+            exitPrompt(28)
         default:
             break;
     }
     diologue.classList.remove("diologue--closed")
     diologue.classList.add("diologue--open")
-    diologue.addEventListener('click', processDiologue);
+}
+function setPrompt(name, text, button_texts) {
+    //totaly won't regret this ;ater :3
+    switch (name) {
+        case "Kvaras":
+            diologue_img.src = "xcf/diologue_test.png"
+            break;
+        default:
+            diologue_img.src = "xcf/prototype1_backtrack.png"
+            break;
+    }
+    diologue_name.innerHTML = name
+    diologue_text.innerHTML = text
+
+    dialogue_button_1.innerHTML = button_texts[0]
+    dialogue_button_1.addEventListener('click', () => {
+        processDiologue(button_texts[1])
+    })
+    dialogue_button_2.innerHTML = button_texts[2]
+    dialogue_button_1.addEventListener('click', () => {
+        processDiologue(button_texts[3])
+    })
+    dialogue_button_3.innerHTML = button_texts[4]
+    dialogue_button_1.addEventListener('click', () => {
+        processDiologue(button_texts[5])
+    })
+}
+function openDiologue(id) {
+    if (dialogue_open) {return}
+    dialogue_open = true
+    processDiologue(id)
+}
+//Exit prompt
+function exitPrompt(scene) {
+ switch (scene) {
+    case 28:
+        holdup.classList.remove("holdup--hidden")
+        holdup.getElementsByClassName("h2")[0].innerHTML = "And go to [Abandoned Polar Bear Breeding Operation] (aka 28)"
+        break;
+    case 74:
+        holdup.classList.remove("holdup--hidden")
+        holdup.getElementsByClassName("h2")[0].innerHTML = "And go to [Spanky's] (aka 74)"
+        break;
+    default:
+        break;
+ }
+}
+function noThanks() {
+    holdup.classList.add("holdup--hidden")
+    closeDiologue()
 }
 //Inventory
 function slotsInit() {
