@@ -29,11 +29,82 @@ let interactables = {
     "snow_mobile" : document.getElementsByClassName("mainScene__center__center--snowMobile")[0],
     "guid_outside" : document.getElementsByClassName("mainScene__center__center--guid_outside")[0],
     "shop_front" : document.getElementsByClassName("mainScene__center__center--shop_shop_front")[0],
-    "snowpile_1" : document.getElementsByClassName("mainScene__center__center--snowpile_1")[0],
 }
-var snowpile_1_stage = 0
-var snowpile_1_debounce = false
-var snowpile_1_pos = [0,0]
+class snowpile {
+    constructor(stage = 0, pos = [0,0], snowpile) {
+        this.maxStage = stage
+        this.stage = stage
+        this.debounce = false
+        this.pos = pos
+        this.snowpile = snowpile
+    }
+    snowstage() {
+        if (this.debounce) {return}
+        switch (this.stage) {
+            case 0:
+                this.stage += 1
+                this.snowpile.style.transform = "translateX("+(this.pos[0] - 33)+"%) translateY("+this.pos[1]+"%)"
+                this.snowpile.style.clipPath = "rect(0% 70% 50% 35%)";
+                this.debounce = true
+                setTimeout(()=>{this.debounce = false}, 100)
+                break;
+            case 1:
+                this.stage += 1
+                this.snowpile.style.transform = "translateX("+(this.pos[0] - 33 * 2)+"%) translateY("+this.pos[1]+"%)"
+                this.snowpile.style.clipPath = "rect(0% 100% 50% 70%)";
+                this.debounce = true
+                setTimeout(()=>{this.debounce = false}, 100)
+                break
+            case 2:
+                this.snowpile.style.transform = "translateX("+(this.pos[0])+"%) translateY("+(this.pos[1] - 50)+"%)"
+                this.snowpile.style.clipPath = "rect(50% 35% 100% 0%)";
+                this.debounce = true
+                setTimeout(()=>{this.debounce = false}, 100)
+                this.stage += 1
+                break;
+            case 3:
+                this.stage += 1
+                this.snowpile.hidden = true
+                setTimeout(
+                    async () => {
+                        this.snowpile.hidden = false
+                        await timer(1000)
+                        this.snowpile.style.transform = "translateX("+(this.pos[0] - 33 * 2)+"%) translateY("+this.pos[1]+"%)"
+                        this.snowpile.style.clipPath = "rect(0% 100% 50% 70%)";
+                        await timer(1000)
+                        this.snowpile.style.transform = "translateX("+(this.pos[0] - 33)+"%) translateY("+this.pos[1]+"%)"
+                        this.snowpile.style.clipPath = "rect(0% 70% 50% 35%)";
+                        await timer(1000)
+                        this.stage = this.maxStage
+                        this.snowpile.style.transform = "translateX("+(this.pos[0])+"%) translateY("+this.pos[1]+"%)"
+                        this.snowpile.style.clipPath = "rect(0% 35% 50% 0%)";
+                    },
+                    1000
+                )
+                break;
+            default:
+                break;
+        }
+    }
+}
+class snowpile_holder{
+    constructor(snowpiles) {
+        snowpiles.forEach(element => { 
+            this.snowpiles.push(element)
+        });
+    }
+    activate() {
+        this.snowpiles.forEach(element => { 
+            element.addEventListener("click", added_functions["snow_mobile"])
+        });
+    }
+    //Make this activate
+    //Make deactivation function
+    //make show
+    //Make hide
+    //Make whatever
+}
+var snowpiles
 var coins = document.getElementsByClassName("mainScene__center__center--coin")
 var coin_spin_stage = 0
 var added_functions = {
@@ -109,9 +180,10 @@ function initGame() {
     interactables["ladder_outside"].hidden = false
     interactables["snow_mobile"].hidden = false
     interactables["guid_outside"].hidden = false
-    interactables["snowpile_1"].hidden = true
     interactables["shop_front"].hidden = true
     coinSpin()
+    snowpiles = new snowpile_holder(document.getElementsByClassName("mainScene__center__center--snowpile_1"))
+    
 }
 function startGame() {
     for (const [key, value] of Object.entries(interactables)) {
@@ -170,7 +242,7 @@ function switchScene(scene_to_load) {
             interactables["ladder_outside"].addEventListener("click", added_functions["ladder_outside"])
             interactables["guid_outside"].addEventListener("click", added_functions["guid_outside"])
             interactables["snow_mobile"].addEventListener("click", added_functions["snow_mobile"])
-            interactables["snowpile_1"].addEventListener("click", snowstage_1)
+            snowpiles.activate()
             break;
         case "shop_shopkeep":
             //sets scene
@@ -985,39 +1057,6 @@ function getAsset(assetNum, id) {
             }
             break;
     
-        default:
-            break;
-    }
-}
-//snowpile stages
-function snowstage_1() {
-    if (snowpile_1_debounce) {return}
-    switch (snowpile_1_stage) {
-        case 0:
-            snowpile_1_stage += 1
-            interactables["snowpile_1"].style.transform = "translateX("+(snowpile_1_pos[0] - 33)+"%) translateY("+snowpile_1_pos[1]+"%)"
-            interactables["snowpile_1"].style.clipPath = "rect(0% 70% 50% 35%)";
-            snowpile_1_debounce = true
-            setTimeout(()=>{snowpile_1_debounce = false}, 1000)
-            break;
-        case 1:
-            snowpile_1_stage += 1
-            interactables["snowpile_1"].style.transform = "translateX("+(snowpile_1_pos[0] - 33 * 2)+"%) translateY("+snowpile_1_pos[1]+"%)"
-            interactables["snowpile_1"].style.clipPath = "rect(0% 100% 50% 70%)";
-            snowpile_1_debounce = true
-            setTimeout(()=>{snowpile_1_debounce = false}, 1000)
-            break;
-        case 2:
-            interactables["snowpile_1"].style.transform = "translateX("+(snowpile_1_pos[0])+"%) translateY("+(snowpile_1_pos[1] - 50)+"%)"
-            interactables["snowpile_1"].style.clipPath = "rect(50% 35% 100% 0%)";
-            snowpile_1_debounce = true
-            setTimeout(()=>{snowpile_1_debounce = false}, 1000)
-            snowpile_1_stage += 1
-            break;
-        case 3:
-            snowpile_1_stage += 1
-            interactables["snowpile_1"].hidden = true
-            break;
         default:
             break;
     }
