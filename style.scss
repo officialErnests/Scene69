@@ -246,8 +246,10 @@ h1, h2, p, button, a {
             color: $diologue-primary;
             overflow: hidden;
             font-size: max(1.5rem, 2vw);
+            width: 50%;
         }
         &__buttons {
+            width: 50%;
             gap: 10px;
             display: flex;
             flex-direction: column;
@@ -301,7 +303,7 @@ h1, h2, p, button, a {
     height: 100vh;
     z-index: -5;
     object-fit: contain;
-    transition: 0;
+    transition: 0s;
     &--img {
         position: absolute;
         width: 100vw;
@@ -356,10 +358,31 @@ h1, h2, p, button, a {
                 transform: translateX(1100%) translateY(200%);
                 width: 8%;
             }
+            &--snowpile_1{
+                transform: translateX(120%) translateY(240%); //200 / 250
+                width: 20%;
+                clip-path: rect(0% 35% 50% 0%);
+            }
+            &--coin_start {
+                transform: translateX(300%) translateY(30%);
+                height: 17.592592593%;
+                width: 10%;
+            }
             //shop
             &--shop_shop_front{
                 width: 100%;
                 height: 100%;
+            }
+            //tower
+            &--coin_tower{
+                transform: translateX(50%) translateY(30%);
+                height: 17.592592593%;
+                width: 10%;
+            }
+            &--coin{
+                pointer-events: none;
+                width: 600%;
+                height: auto;
             }
         }
     }

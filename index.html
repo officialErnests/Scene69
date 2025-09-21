@@ -16,7 +16,7 @@
     <!-- z 70 -->
     <div class="holdup holdup--hidden" id="holdup">
         <h1>HOLDUP, you'r about to leave this scene</h1>
-        <h2>And go to [insert next scene :PP]</h2>
+        <h2 id="holdup_h2">And go to [insert next scene :PP]</h2>
         <h1>Are you sure??</h1>
         <div class="holdup__buttons">
             <button onclick="noThanks()"> No, I'll stay!</button>
@@ -110,6 +110,8 @@
         <img src="xcf/V1_Town_shop_view.png" alt="Shop view" class="mainScene--img" id="mainScene">
         <div class="mainScene__center">
             <div class="mainScene__center__center">
+                <!-- snowpiles -->
+                <img src="xcf/V1_SnowAssets_1.png" alt="Shop view" class="mainScene__center__center--interactable mainScene__center__center--snowpile_1">
                 <!-- opening -->
                 <img src="xcf/V1_interactables.png" alt="Shop view" class="mainScene__center__center--interactable mainScene__center__center--doorOutside">
                 <img src="xcf/V1_interactables.png" alt="Ladder" class="mainScene__center__center--interactable mainScene__center__center--ladderOutside">
@@ -117,6 +119,13 @@
                 <img src="xcf/prototype1_outside_guide_interact.png" alt="guid" class="mainScene__center__center--interactable mainScene__center__center--guid_outside">
                 <!-- shop_shopkeep -->
                 <img src="xcf/v1_shop_shop_front.png" alt="guid" class="mainScene__center__center--shop_shop_front">
+                <!-- view -->
+                <div class="mainScene__center__center--interactable mainScene__center__center--coin_tower">
+                    <img src="xcf/V1_interactables.png" alt="guid" class="mainScene__center__center--coin">
+                </div>
+                <div class="mainScene__center__center--interactable mainScene__center__center--coin_start">
+                    <img src="xcf/V1_interactables.png" alt="guid" class="mainScene__center__center--coin">
+                </div>
             </div>
         </div>
     </div>

@@ -18,6 +18,7 @@ var dialogue_button_1 = document.getElementById("dialogue_button_1")
 var dialogue_button_2 = document.getElementById("dialogue_button_2")
 var dialogue_button_3 = document.getElementById("dialogue_button_3")
 var holdup = document.getElementById("holdup")
+var holdup_h2 = document.getElementById("holdup_h2")
 const timer = ms => new Promise(res => setTimeout(res, ms))
 const img_assets_1 = new Image(192, 128)
 img_assets_1.src = "xcf/V1_SnowAssets_1.png"
@@ -28,9 +29,20 @@ let interactables = {
     "snow_mobile" : document.getElementsByClassName("mainScene__center__center--snowMobile")[0],
     "guid_outside" : document.getElementsByClassName("mainScene__center__center--guid_outside")[0],
     "shop_front" : document.getElementsByClassName("mainScene__center__center--shop_shop_front")[0],
+    "snowpile_1" : document.getElementsByClassName("mainScene__center__center--snowpile_1")[0],
+}
+var snowpile_1_stage = 0
+var snowpile_1_debounce = false
+var snowpile_1_pos = [0,0]
+var coins = document.getElementsByClassName("mainScene__center__center--coin")
+var coin_spin_stage = 0
+var added_functions = {
 }
 var audio = new Audio('music/C0ZYE5TC0LD.ogg');
 var dialogue_open = false
+var SN_Checked = 0
+var KV_Name = 0
+var HU_Name = 0
 
 audio.addEventListener("ended", () => {audio.play()})
 class snowparticle {
@@ -81,7 +93,6 @@ class snowparticle {
     }
 }
 
-
 let backpack_open = false
 let backpack_slots = [0,0,0,0,0,0]
 let held_slot = 0
@@ -89,9 +100,19 @@ let held_slot = 0
 //init
 snow()
 slotsInit()
+initGame()
 // startGame()
 //starts main functional manager
 // window.addEventListener("click", startGame);
+function initGame() {
+    interactables["outside_door"].hidden = false
+    interactables["ladder_outside"].hidden = false
+    interactables["snow_mobile"].hidden = false
+    interactables["guid_outside"].hidden = false
+    interactables["snowpile_1"].hidden = true
+    interactables["shop_front"].hidden = true
+    coinSpin()
+}
 function startGame() {
     for (const [key, value] of Object.entries(interactables)) {
         value.hidden = true
@@ -141,9 +162,15 @@ function switchScene(scene_to_load) {
             //shows all assets
             showScene()
             //sets up all events (like interactables)
-            interactables["outside_door"].addEventListener("click", interactionLisener_switch.bind(null, "shop_shopkeep"))
-            interactables["ladder_outside"].addEventListener("click", interactionLisener_switch.bind(null, "tower"))
-            interactables["guid_outside"].addEventListener("click", openDiologue.bind(null, "Outside_guid_1"))
+            added_functions["outside_door"] = interactionLisener_switch.bind(null, "shop_shopkeep")
+            added_functions["ladder_outside"] = interactionLisener_switch.bind(null, "tower")
+            added_functions["guid_outside"] = openDiologue.bind(null, "1")
+            added_functions["snow_mobile"] = openDiologue.bind(null, "0")
+            interactables["outside_door"].addEventListener("click", added_functions["outside_door"])
+            interactables["ladder_outside"].addEventListener("click", added_functions["ladder_outside"])
+            interactables["guid_outside"].addEventListener("click", added_functions["guid_outside"])
+            interactables["snow_mobile"].addEventListener("click", added_functions["snow_mobile"])
+            interactables["snowpile_1"].addEventListener("click", snowstage_1)
             break;
         case "shop_shopkeep":
             //sets scene
@@ -190,9 +217,23 @@ function disableScene() {
     //deloads previous scene
     switch (scene) {
         case "opening":
-            interactables["outside_door"].removeEventListener("click", interactionLisener_switch)
-            interactables["ladder_outside"].removeEventListener("click", interactionLisener_switch)
-            interactables["guid_outside"].removeEventListener("click", openDiologue)
+            if (added_functions["outside_door"]) {
+                interactables["outside_door"].removeEventListener('click', added_functions["outside_door"])
+                delete added_functions["outside_door"]
+            }
+            if (added_functions["ladder_outside"]) {
+                interactables["ladder_outside"].removeEventListener('click', added_functions["ladder_outside"])
+                delete added_functions["ladder_outside"]
+            }
+            if (added_functions["guid_outside"]) {
+                interactables["guid_outside"].removeEventListener('click', added_functions["guid_outside"])
+                delete added_functions["guid_outside"]
+            }
+            if (added_functions["snow_mobile"]) {
+                interactables["snow_mobile"].removeEventListener('click', added_functions["snow_mobile"])
+                delete added_functions["snow_mobile"]
+            }
+            interactables["snowpile_1"].removeEventListener('click', snowstage_1)
             break;
         default:
             break;
@@ -206,6 +247,9 @@ function showScene() {
             interactables["ladder_outside"].hidden = false
             interactables["snow_mobile"].hidden = false
             interactables["guid_outside"].hidden = false
+            interactables["snowpile_1"].hidden = false
+            snowpile_1_pos = [Math.random() * 80 + 120, Math.random() * 10 + 240]
+            interactables["snowpile_1"].style.transform = "translateX("+snowpile_1_pos[0]+"%) translateY("+snowpile_1_pos[1]+"%)"
             //disables intractables
             break;
         case "shop_shopkeep":
@@ -223,6 +267,7 @@ function hideScene() {
             interactables["ladder_outside"].hidden = true
             interactables["snow_mobile"].hidden = true
             interactables["guid_outside"].hidden = true
+            interactables["snowpile_1"].hidden = true
             //disables intractables
             break;
         case "shop_shopkeep":
@@ -346,75 +391,440 @@ function openPlace(placeName, placeDescription) {
 function closeDiologue() {
     diologue.classList.remove("diologue--open")
     diologue.classList.add("diologue--closed")
-    diologue.removeEventListener('click', closeDiologue);
     dialogue_open = false
 }
-function processDiologue(id) {
+async function processDiologue(id) {
+    console.log("Start");
+    console.log(Object.keys(added_functions).length);
+    if (added_functions["diologue"]) {
+        diologue.removeEventListener('click', added_functions["diologue"])
+        delete added_functions["diologue"]
+    }
+    if (added_functions["dialogue_button_1"]) {
+        dialogue_button_1.removeEventListener('click', added_functions["dialogue_button_1"])
+        delete added_functions["dialogue_button_1"]
+    }
+    if (added_functions["dialogue_button_2"]) {
+        dialogue_button_2.removeEventListener('click', added_functions["dialogue_button_2"])
+        delete added_functions["dialogue_button_2"]
+    }
+    if (added_functions["dialogue_button_3"]) {
+        dialogue_button_3.removeEventListener('click', added_functions["dialogue_button_3"])
+        delete added_functions["dialogue_button_3"]
+    }
+    console.log(Object.keys(added_functions).length);
+    
+    if (id == "") {
+        closeDiologue()
+        return
+    }
     switch (id) {
-        case "Outside_guid_1":
+        //snow mobile
+        case "0":
+            if (SN_Checked == 0) {
+                processDiologue("00")
+            } else {
+                processDiologue("01")
+            }
+            break;
+        case "01":
             setPrompt("Kvaras",
-                "Well hello there. \nWhat are you doing so far out here?",
+                "So, up for the ride?",
                 [
-                    "I'm walking around, taking a stroll in the mountains.",
-                    "Outside_guid_1_1",
-                    "Hello there, i was just trawling around!",
-                    "Outside_guid_1_2",
-                    "Enjoying the view, how about you?",
-                    "Outside_guid_1_3",
+                    "Hell yeah!",
+                    "010",
+                    "No, not in particular...",
+                    "011",
                 ]
             )
             break;
-        case "Outside_guid_1_1":
+        case "010":
             setPrompt("Kvaras",
-                "That's cool, if you'd like i can take you to\
-                Abandoned Polar Bear Breeding Operation.\n\
-                Kinda weird name if you ask me,\
-                but it's quick little hike trogh the mountains!",
+                "Sure, if you keep in that direction you can reach Spankey's (scene 74), I've heard it has somthing to do with rolling the dice.",
                 [
-                    "Oh that sounds lovely, sure!\n\
-                    <b>[Go to Abandoned Polar Bear Breeding Operation]</b>",
-                    "exit_1",
-                    "Hello there, i was just trawling around!",
-                    "Outside_guid_1_2",
-                    "Enjoying the view, how about you?",
-                    "Outside_guid_1_3",
+                    "Oh, you have no idea how good I am with that!",
+                    "exit_74",
+                    "Oh, so you know something about it?",
+                    "0101",
+                    "Not the biggest gambler here...",
+                    "0102",
                 ]
             )
             break;
-        //exit statments
-        case "exit_1":
+        case "0101":
+            setPrompt("Kvaras",
+                "Yeah, I come from that side, but i of course love the mountains more than the desert!",
+                [
+                    "Yeah, can see them being cool!",
+                    "",
+                    "You come from there? That's sick!",
+                    "",
+                    "Oh, i see...",
+                    "",
+                ]
+            )
+            break;
+        case "0102":
+            setPrompt("Kvaras",
+                "Oh, yeah sure, although it has something more than gambling, it's just the main attraction.",
+                [
+                    "If you say it like that, the sure let us move!",
+                    "exit_74",
+                    "Riiight.... either way i like freezing rather than melting.",
+                    "",
+                    "I just arrived, why not take time exploring this place!",
+                    "01021",
+                ]
+            )
+            break;
+        case "01021":
+            setPrompt("Kvaras",
+                "Yeah sure!",
+                [
+                    "",
+                ]
+            )
+            break;
+        case "00":
+            setPrompt("Narrator",
+                "As you walked towards snow mobile you hear a hey",
+                [
+                    "000",
+                ]
+            )
+            break;
+        case "000":
+            SN_Checked = 1
+            setPrompt("Kvaras",
+                "Hey what's up, interested in my ride, ey?",
+                [
+                    "It's looking hell a sick, can i give it a go?",
+                    "010",
+                    "Oh, hi. Who are you?",
+                    "100",
+                    "No, not in particular...",
+                    "011",
+                ]
+            )
+            break;
+        case "100":
+            KV_Name = 1
+            setPrompt("Kvaras",
+                "I'm Kvaras, the local guide and if you want i can take you to Abandoned Polar Bear Breeding Operation, kinda weird place name, but it's fun",
+                [
+                    "That name alone got me curious, let's move!",
+                    "exit_28",
+                    "Yeah, that sounds too weird for me..",
+                    "1001",
+                ]
+            )
+            break;
+        case "1001":
+            setPrompt("Kvaras",
+                "Fair enough, still the offer stands if you change your mind.",
+                [
+                    "",
+                ]
+            )
+            break;
+        case "1":
+            if (KV_Name == 0){
+                processDiologue("10")
+            } else {
+                processDiologue("10")
+            }
+            break;
+        case "10":
+            setPrompt("Kvaras",
+                "As you approach this person, it notices you",
+                [
+                    "Hi, who are you?",
+                    "100",
+                    "Say, where are we?",
+                    "101",
+                    "*Walk away pretending you weren't going towards him*",
+                    "",
+                ]
+            )
+            break;
+        case "101":
+            setPrompt("Kvaras",
+                "Basically in winter wonder land, snow each and every day for decades.",
+                [
+                    "Oh, that sound horrifying, wait who are you? ",
+                    "100",
+                    "Wait, for real, you're not exaggerating that it has been snowing for decades??",
+                    "1011",
+                ]
+            )
+            break;
+        case "1011":
+            setPrompt("Kvaras",
+                "Ha ha, yeah but no it has been snowing for such a long time as the layers have build on to each other for decades. Also there are some rumors",
+                [
+                    "Yeah, that's sick and all, but who are you?",
+                    "100",
+                    "Rumors? What do you mean?",
+                    "10111",
+                    "That's cool, i guess... I will look around now.",
+                    "",
+                ]
+            )
+            break;
+        case "10111":
+            setPrompt("Kvaras",
+                "Yeah, that there is buried kingdom under this very spot, but hey it's a legend..",
+                [
+                    "That's interesting to say the least, by the way I didn't catch your name.",
+                    "100",
+                    "*run off trying to find the rumored kingdom*",
+                    "",
+                ]
+            )
+            break;
+        case "011":
+            setPrompt("Kvaras",
+                "Oh ok...",
+                [
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+
+
+        //example
+        case "":
+            setPrompt("Kvaras",
+                "",
+                [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            )
+            break;
+
+
+        //exits
+        case "exit_28":
             exitPrompt(28)
+            break
+        case "exit_74":
+            exitPrompt(74)
+            break
         default:
+            console.warn("Errr" + id);
             break;
     }
     diologue.classList.remove("diologue--closed")
     diologue.classList.add("diologue--open")
 }
-function setPrompt(name, text, button_texts) {
+async function setPrompt(name, text, button_texts) {
     //totaly won't regret this ;ater :3
     switch (name) {
         case "Kvaras":
             diologue_img.src = "xcf/diologue_test.png"
+            if (KV_Name == 0) {
+                diologue_name.innerHTML = "???"
+            } else {
+                diologue_name.innerHTML = name
+            }
             break;
         default:
             diologue_img.src = "xcf/prototype1_backtrack.png"
             break;
     }
-    diologue_name.innerHTML = name
     diologue_text.innerHTML = text
-
-    dialogue_button_1.innerHTML = button_texts[0]
-    dialogue_button_1.addEventListener('click', () => {
-        processDiologue(button_texts[1])
-    })
-    dialogue_button_2.innerHTML = button_texts[2]
-    dialogue_button_1.addEventListener('click', () => {
-        processDiologue(button_texts[3])
-    })
-    dialogue_button_3.innerHTML = button_texts[4]
-    dialogue_button_1.addEventListener('click', () => {
-        processDiologue(button_texts[5])
-    })
+    let timeout = 1000
+    if (button_texts.length == 1) {
+        dialogue_button_1.style.display = "none"
+        dialogue_button_2.style.display = "none"
+        dialogue_button_3.style.display = "none"
+        setTimeout(() => {
+            added_functions["diologue"] = processDiologue.bind(null, button_texts[0])
+            diologue.addEventListener('click', added_functions["diologue"])
+            console.log(Object.keys(added_functions).length);
+        }, timeout)
+    }
+    if (button_texts.length >= 2) {
+        dialogue_button_1.style.display = "block"
+        dialogue_button_1.innerHTML = button_texts[0]
+        setTimeout(() => {
+            added_functions["dialogue_button_1"] = processDiologue.bind(null, button_texts[1])
+            dialogue_button_1.addEventListener('click', added_functions["dialogue_button_1"])
+            console.log(Object.keys(added_functions).length);
+        }, timeout)
+    } else {
+        dialogue_button_1.style.display = "none"
+    }
+    if (button_texts.length >= 4) {
+        dialogue_button_2.style.display = "block"
+        dialogue_button_2.innerHTML = button_texts[2]
+        setTimeout(() => {
+            added_functions["dialogue_button_2"] = processDiologue.bind(null, button_texts[3])
+            dialogue_button_2.addEventListener('click', added_functions["dialogue_button_2"])
+            console.log(Object.keys(added_functions).length);
+        }, timeout)
+    } else {
+        dialogue_button_2.style.display = "none"
+    }
+    if (button_texts.length >= 6) {
+        dialogue_button_3.style.display = "block"
+        dialogue_button_3.innerHTML = button_texts[4]
+        setTimeout(() => {
+            added_functions["dialogue_button_3"] = processDiologue.bind(null, button_texts[5])
+            dialogue_button_3.addEventListener('click', added_functions["dialogue_button_3"])
+            console.log(Object.keys(added_functions).length);
+        }, timeout)
+    } else {
+        dialogue_button_3.style.display = "none"
+    }
 }
 function openDiologue(id) {
     if (dialogue_open) {return}
@@ -426,11 +836,11 @@ function exitPrompt(scene) {
  switch (scene) {
     case 28:
         holdup.classList.remove("holdup--hidden")
-        holdup.getElementsByClassName("h2")[0].innerHTML = "And go to [Abandoned Polar Bear Breeding Operation] (aka 28)"
+        holdup_h2.innerHTML = "And go to [Abandoned Polar Bear Breeding Operation] (aka 28)"
         break;
     case 74:
         holdup.classList.remove("holdup--hidden")
-        holdup.getElementsByClassName("h2")[0].innerHTML = "And go to [Spanky's] (aka 74)"
+        holdup_h2.innerHTML = "And go to [Spanky's] (aka 74)"
         break;
     default:
         break;
@@ -485,7 +895,7 @@ async function snow() {
     const ctx = canvas.getContext("2d");
     let snowball = []
     let timer2 = 0
-    let inx = 0
+    let snowPiles = []
     while (true) {
         if (!snowing){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -577,5 +987,96 @@ function getAsset(assetNum, id) {
     
         default:
             break;
+    }
+}
+//snowpile stages
+function snowstage_1() {
+    if (snowpile_1_debounce) {return}
+    switch (snowpile_1_stage) {
+        case 0:
+            snowpile_1_stage += 1
+            interactables["snowpile_1"].style.transform = "translateX("+(snowpile_1_pos[0] - 33)+"%) translateY("+snowpile_1_pos[1]+"%)"
+            interactables["snowpile_1"].style.clipPath = "rect(0% 70% 50% 35%)";
+            snowpile_1_debounce = true
+            setTimeout(()=>{snowpile_1_debounce = false}, 1000)
+            break;
+        case 1:
+            snowpile_1_stage += 1
+            interactables["snowpile_1"].style.transform = "translateX("+(snowpile_1_pos[0] - 33 * 2)+"%) translateY("+snowpile_1_pos[1]+"%)"
+            interactables["snowpile_1"].style.clipPath = "rect(0% 100% 50% 70%)";
+            snowpile_1_debounce = true
+            setTimeout(()=>{snowpile_1_debounce = false}, 1000)
+            break;
+        case 2:
+            interactables["snowpile_1"].style.transform = "translateX("+(snowpile_1_pos[0])+"%) translateY("+(snowpile_1_pos[1] - 50)+"%)"
+            interactables["snowpile_1"].style.clipPath = "rect(50% 35% 100% 0%)";
+            snowpile_1_debounce = true
+            setTimeout(()=>{snowpile_1_debounce = false}, 1000)
+            snowpile_1_stage += 1
+            break;
+        case 3:
+            snowpile_1_stage += 1
+            interactables["snowpile_1"].hidden = true
+            break;
+        default:
+            break;
+    }
+}
+//coins
+var coinspinspeed = 100
+async function coinSpin() {
+    while(true){
+        await timer(coinspinspeed)
+        
+        coinSpin_spin()
+    }
+}
+function coinSpin_spin() {
+    coin_spin_stage += 1
+    if (coin_spin_stage > 7) {
+        coin_spin_stage = 0
+    }
+    var cliperpath = ""
+    var transformer = ""
+    switch (coin_spin_stage) {
+        case 0:
+            cliperpath = "rect(0% 16.666666667% 20% 0%)"
+            transformer = "translateX(0%) translateY(0%)"
+            break;
+        case 1:
+            cliperpath = "rect(0% 33.333333334% 20% 16.666666667%)"
+            transformer = "translateX(-16.666666667%) translateY(0%)"
+            break
+        case 2:
+            cliperpath = "rect(0% 50% 20% 33.333333334%)"
+            transformer = "translateX(-33.333333334%) translateY(0%)"
+            break
+        case 3:
+            cliperpath = "rect(20% 50% 40% 33.333333334%)"
+            transformer = "translateX(-33.333333334%) translateY(-20%)"
+            break
+        case 4:
+            cliperpath = "rect(20% 33.333333334% 40% 16.666666667%)"
+            transformer = "translateX(-16.666666667%) translateY(-20%)"
+            break
+        case 5:
+            cliperpath = "rect(20% 16.666666667% 40% 0%)"
+            transformer = "translateX(0%) translateY(-20%)"
+            break;
+        case 6:
+            cliperpath = "rect(40% 16.666666667% 60% 0%)"
+            transformer = "translateX(0%) translateY(-40%)"
+            break;
+        case 7:
+            cliperpath = "rect(40% 33.333333334% 60% 16.666666667%)"
+            transformer = "translateX(-16.666666667%) translateY(-40%)"
+            break
+        default:
+            break;
+    }
+    for (let index = 0; index < coins.length; index++) {
+        const element = coins[index];
+        element.style.clipPath = cliperpath
+        element.style.transform = transformer
     }
 }
