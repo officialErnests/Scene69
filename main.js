@@ -32,38 +32,32 @@ let interactables = {
 }
 class snowpile {
     constructor(stage = 0, pos = [0,0], snowpile) {
+        
         this.maxStage = stage
         this.stage = stage
         this.debounce = false
         this.pos = pos
         this.snowpile = snowpile
     }
-    snowstage() {
-        if (this.debounce) {return}
+    place() {
         switch (this.stage) {
             case 0:
-                this.stage += 1
+                this.snowpile.style.transform = "translateX("+(this.pos[0])+"%) translateY("+this.pos[1]+"%)"
+                this.snowpile.style.clipPath = "rect(0% 35% 50% 0%)";
+                break
+            case 1:
                 this.snowpile.style.transform = "translateX("+(this.pos[0] - 33)+"%) translateY("+this.pos[1]+"%)"
                 this.snowpile.style.clipPath = "rect(0% 70% 50% 35%)";
-                this.debounce = true
-                setTimeout(()=>{this.debounce = false}, 100)
-                break;
-            case 1:
-                this.stage += 1
-                this.snowpile.style.transform = "translateX("+(this.pos[0] - 33 * 2)+"%) translateY("+this.pos[1]+"%)"
-                this.snowpile.style.clipPath = "rect(0% 100% 50% 70%)";
-                this.debounce = true
-                setTimeout(()=>{this.debounce = false}, 100)
                 break
             case 2:
+                this.snowpile.style.transform = "translateX("+(this.pos[0] - 33 * 2)+"%) translateY("+this.pos[1]+"%)"
+                this.snowpile.style.clipPath = "rect(0% 100% 50% 70%)";
+                break
+            case 3:
                 this.snowpile.style.transform = "translateX("+(this.pos[0])+"%) translateY("+(this.pos[1] - 50)+"%)"
                 this.snowpile.style.clipPath = "rect(50% 35% 100% 0%)";
-                this.debounce = true
-                setTimeout(()=>{this.debounce = false}, 100)
-                this.stage += 1
-                break;
-            case 3:
-                this.stage += 1
+                break
+            case 4:
                 this.snowpile.hidden = true
                 setTimeout(
                     async () => {
@@ -86,22 +80,93 @@ class snowpile {
                 break;
         }
     }
+    snowstage() {
+        if (this.debounce) {return}
+        switch (this.stage) {
+            case 0:
+                this.stage += 1
+                this.snowpile.style.transform = "translateX("+(this.pos[0] - 33)+"%) translateY("+this.pos[1]+"%)"
+                this.snowpile.style.clipPath = "rect(0% 70% 50% 35%)";
+                this.debounce = true
+                setTimeout(()=>{this.debounce = false}, 10)
+                break;
+            case 1:
+                this.stage += 1
+                this.snowpile.style.transform = "translateX("+(this.pos[0] - 33 * 2)+"%) translateY("+this.pos[1]+"%)"
+                this.snowpile.style.clipPath = "rect(0% 100% 50% 70%)";
+                this.debounce = true
+                setTimeout(()=>{this.debounce = false}, 10)
+                break
+            case 2:
+                this.snowpile.style.transform = "translateX("+(this.pos[0])+"%) translateY("+(this.pos[1] - 50)+"%)"
+                this.snowpile.style.clipPath = "rect(50% 35% 100% 0%)";
+                this.debounce = true
+                setTimeout(()=>{this.debounce = false}, 10)
+                this.stage += 1
+                break;
+            case 3:
+                this.stage += 1
+                this.snowpile.hidden = true
+                setTimeout(
+                    async () => {
+                        this.snowpile.hidden = false
+                        await timer(1000)
+                        this.snowpile.style.transform = "translateX("+(this.pos[0] - 33 * 2)+"%) translateY("+this.pos[1]+"%)"
+                        this.snowpile.style.clipPath = "rect(0% 100% 50% 70%)";
+                        await timer(1000)
+                        this.snowpile.style.transform = "translateX("+(this.pos[0] - 33)+"%) translateY("+this.pos[1]+"%)"
+                        this.snowpile.style.clipPath = "rect(0% 70% 50% 35%)";
+                        await timer(1000)
+                        this.stage = this.maxStage
+                        this.snowpile.style.transform = "translateX("+(this.pos[0])+"%) translateY("+this.pos[1]+"%)"
+                        this.snowpile.style.clipPath = "rect(0% 35% 50% 0%)";
+                    },
+                    2000
+                )
+                break;
+            default:
+                break;
+        }
+    }
 }
 class snowpile_holder{
     constructor(snowpiles) {
-        snowpiles.forEach(element => { 
-            this.snowpiles.push(element)
-        });
+        this.snowpiles = []
+        for (let index = 0; index < snowpiles.length; index++) {
+            const element = snowpiles[index];
+            const snowpile_1_pos = [Math.random() * 80 + 120, Math.random() * 10 + 240]
+            this.snowpiles.push(new snowpile(Math.floor(Math.random()*3), snowpile_1_pos, element))
+        }
+        this.order()
     }
     activate() {
         this.snowpiles.forEach(element => { 
-            element.addEventListener("click", added_functions["snow_mobile"])
+            element.snowpile.addEventListener("click", element.snowstage.bind(element))
         });
     }
-    //Make this activate
-    //Make deactivation function
-    //make show
-    //Make hide
+    deactivate() {
+        this.snowpiles.forEach(element => { 
+            element.snowpile.removeEventListener("click", element.snowstage.bind(element))
+        });
+    }
+    show() {
+        this.snowpiles.forEach(element => { 
+            element.snowpile.hidden = false
+            const snowpile_1_pos = [Math.random() * 80 + 120, Math.random() * 10 + 240]
+            element.pos = snowpile_1_pos
+            element.place()
+        });
+    }
+    hide() {
+        this.snowpiles.forEach(element => { 
+            element.snowpile.hidden = true
+        });
+    }
+    order() {
+        this.snowpiles.forEach(element => { 
+            element.snowpile.style.zindex = 235 - element.pos[1]/10
+        });
+    }
     //Make whatever
 }
 var snowpiles
@@ -183,7 +248,6 @@ function initGame() {
     interactables["shop_front"].hidden = true
     coinSpin()
     snowpiles = new snowpile_holder(document.getElementsByClassName("mainScene__center__center--snowpile_1"))
-    
 }
 function startGame() {
     for (const [key, value] of Object.entries(interactables)) {
@@ -305,7 +369,7 @@ function disableScene() {
                 interactables["snow_mobile"].removeEventListener('click', added_functions["snow_mobile"])
                 delete added_functions["snow_mobile"]
             }
-            interactables["snowpile_1"].removeEventListener('click', snowstage_1)
+            snowpiles.deactivate()
             break;
         default:
             break;
@@ -319,9 +383,7 @@ function showScene() {
             interactables["ladder_outside"].hidden = false
             interactables["snow_mobile"].hidden = false
             interactables["guid_outside"].hidden = false
-            interactables["snowpile_1"].hidden = false
-            snowpile_1_pos = [Math.random() * 80 + 120, Math.random() * 10 + 240]
-            interactables["snowpile_1"].style.transform = "translateX("+snowpile_1_pos[0]+"%) translateY("+snowpile_1_pos[1]+"%)"
+            snowpiles.show()
             //disables intractables
             break;
         case "shop_shopkeep":
@@ -339,7 +401,7 @@ function hideScene() {
             interactables["ladder_outside"].hidden = true
             interactables["snow_mobile"].hidden = true
             interactables["guid_outside"].hidden = true
-            interactables["snowpile_1"].hidden = true
+            snowpiles.hide()
             //disables intractables
             break;
         case "shop_shopkeep":
@@ -853,7 +915,7 @@ async function setPrompt(name, text, button_texts) {
             break;
     }
     diologue_text.innerHTML = text
-    let timeout = 1000
+    let timeout = 100
     if (button_texts.length == 1) {
         dialogue_button_1.style.display = "none"
         dialogue_button_2.style.display = "none"
@@ -1062,10 +1124,9 @@ function getAsset(assetNum, id) {
     }
 }
 //coins
-var coinspinspeed = 100
 async function coinSpin() {
     while(true){
-        await timer(coinspinspeed)
+        await timer(50)
         
         coinSpin_spin()
     }

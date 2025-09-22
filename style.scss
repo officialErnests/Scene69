@@ -362,6 +362,7 @@ h1, h2, p, button, a {
                 transform: translateX(120%) translateY(240%); //200 / 250
                 width: 20%;
                 clip-path: rect(0% 35% 50% 0%);
+                opacity: 70%;
             }
             &--coin_start {
                 transform: translateX(300%) translateY(30%);
