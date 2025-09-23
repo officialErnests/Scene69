@@ -19,6 +19,16 @@ h1, h2, p, button, a {
   font-style: normal;
 }
 
+img {
+  image-rendering: pixelated;
+}
+
+.CUT {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 .holdup {
   width: 100vw;
   height: 100vh;
@@ -125,6 +135,17 @@ h1, h2, p, button, a {
   border: none;
   font-size: 10vw;
   cursor: pointer;
+}
+.startText a {
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  background-color: #e0e0e0;
+  text-decoration: none;
+  color: black;
+  font-size: 5vw;
 }
 
 .startScreen {
@@ -356,7 +377,7 @@ h1, h2, p, button, a {
   clip-path: rect(70% 75% 100% 25%);
 }
 .mainScene__center__center--guid_outside {
-  transform: translateX(1100%) translateY(200%);
+  transform: translateX(1150%) translateY(120%);
   width: 8%;
 }
 .mainScene__center__center--snowpile_1 {
@@ -373,6 +394,14 @@ h1, h2, p, button, a {
 .mainScene__center__center--shop_shop_front {
   width: 100%;
   height: 100%;
+  height: auto;
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+.mainScene__center__center--shopkeep {
+  transform: translateX(100%) translateY(10%);
+  width: 25%;
 }
 .mainScene__center__center--coin_tower {
   transform: translateX(50%) translateY(30%);

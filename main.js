@@ -29,6 +29,7 @@ let interactables = {
     "snow_mobile" : document.getElementsByClassName("mainScene__center__center--snowMobile")[0],
     "guid_outside" : document.getElementsByClassName("mainScene__center__center--guid_outside")[0],
     "shop_front" : document.getElementsByClassName("mainScene__center__center--shop_shop_front")[0],
+    "shopkeep" : document.getElementsByClassName("mainScene__center__center--shopkeep")[0],
 }
 class snowpile {
     constructor(stage = 0, pos = [0,0], snowpile) {
@@ -246,6 +247,7 @@ function initGame() {
     interactables["snow_mobile"].hidden = false
     interactables["guid_outside"].hidden = false
     interactables["shop_front"].hidden = true
+    interactables["shopkeep"].hidden = true
     coinSpin()
     snowpiles = new snowpile_holder(document.getElementsByClassName("mainScene__center__center--snowpile_1"))
 }
@@ -319,6 +321,9 @@ function switchScene(scene_to_load) {
             snowing = false
             //shows all assets
             showScene()
+            //interactables
+            added_functions["shopkeep"] = openDiologue.bind(null, "1")
+            interactables["shopkeep"].addEventListener("click", added_functions["shopkeep"])
             break;
         case "tower":
             //sets scene
@@ -371,6 +376,12 @@ function disableScene() {
             }
             snowpiles.deactivate()
             break;
+            case "shop_shopkeep":
+            if (added_functions["shopkeep"]) {
+                interactables["shopkeep"].removeEventListener('click', added_functions["shopkeep"])
+                delete added_functions["shopkeep"]
+            }
+            break
         default:
             break;
     }
@@ -388,6 +399,7 @@ function showScene() {
             break;
         case "shop_shopkeep":
             interactables["shop_front"].hidden = false
+            interactables["shopkeep"].hidden = false
             break;
         default:
             break;
@@ -406,6 +418,7 @@ function hideScene() {
             break;
         case "shop_shopkeep":
             interactables["shop_front"].hidden = true
+            interactables["shopkeep"].hidden = true
             break;
         default:
             break;
@@ -903,7 +916,15 @@ async function setPrompt(name, text, button_texts) {
     //totaly won't regret this ;ater :3
     switch (name) {
         case "Kvaras":
-            diologue_img.src = "xcf/diologue_test.png"
+            diologue_img.src = "xcf/v1_guid_picture.png"
+            if (KV_Name == 0) {
+                diologue_name.innerHTML = "???"
+            } else {
+                diologue_name.innerHTML = name
+            }
+            break;
+        case "Hubert":
+            diologue_img.src = "xcf/v1_shopkeep_picture.png"
             if (KV_Name == 0) {
                 diologue_name.innerHTML = "???"
             } else {
@@ -912,6 +933,7 @@ async function setPrompt(name, text, button_texts) {
             break;
         default:
             diologue_img.src = "xcf/prototype1_backtrack.png"
+            diologue_name.innerHTML = "Narrator"
             break;
     }
     diologue_text.innerHTML = text

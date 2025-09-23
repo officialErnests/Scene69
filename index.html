@@ -41,22 +41,7 @@
         </p>
         <hr>
         <button onclick="startGame()">PLAY</button>
-        <hr>
-        <p>
-            --Credits-- <br>
-            Made whith html, scss, js<br>
-            0 Ai made by human with love <3<br><br>
-            programming js (diologue, scene manager, etc) - n0o0b090lv (me)<br>
-            scss (all styling) - n0o0b090lv (me)<br>
-            music and sfx - n0o0b090lv (me)<br>
-            all art - n0o0b090lv (me) <br><br>
-            in short i am soul dev in this XD <br>
-            it was made for summer of making grand tour<br>
-            (scene 69 btw XD) <br><br>
-            here you can find me <br>
-            <a href="https://hackclub.slack.com/archives/C09BE8QF1V5" target="_blank" class="startLinks">@n0o0b090lv</a> (slack channel) <br>
-            <a href="https://summer.hackclub.com/s" target="_blank" class="startLinks">grand tour</a> (made for grand tour [scene 69 :))])
-        </p>
+        <a href="Credits.html" id="startText__buttons--a">Credits</a>
     </calss>
     <!-- z 50 -->
     <div class="startScreen startPopup">
@@ -66,7 +51,7 @@
     <!-- z 18 -->
     <div class="hand">
         <input type="image" src="xcf/prototype_eye.png" alt="look around" id="lookaround">
-        <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot">
+        <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden>
         <input type="image" src="xcf/prototype1_backtrack.png" alt="backtrack" id="backtrack">
     </div>
     <!-- z 15 -->
@@ -87,15 +72,15 @@
         </div>
     </div>
     <!-- z 13 -->
-    <div class="backpack backpack--closed" id="backpack">
+    <div class="backpack backpack--closed CUT" id="backpack">
         <img src="xcf/prototype1_backpack_closed.png" alt="backpack" id="backpack_img">
-        <div class="backpack__slots" id="backpack_slot_holder">
-            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
-            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
-            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
-            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
-            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
-            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot">
+        <div class="backpack__slots CUT" id="backpack_slot_holder">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot CUT">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot CUT">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot CUT">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot CUT">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot CUT">
+            <input type="image" src="xcf/prototype1_invSlot.png" alt="inv_slot" hidden class="inv_slot CUT">
         </div>
     </div>
     <!-- z 10 -->
@@ -119,9 +104,10 @@
                 <img src="xcf/V1_interactables.png" alt="Shop view" class="mainScene__center__center--interactable mainScene__center__center--doorOutside">
                 <img src="xcf/V1_interactables.png" alt="Ladder" class="mainScene__center__center--interactable mainScene__center__center--ladderOutside">
                 <img src="xcf/V1_interactables.png" alt="snow mobile" class="mainScene__center__center--interactable mainScene__center__center--snowMobile">
-                <img src="xcf/prototype1_outside_guide_interact.png" alt="guid" class="mainScene__center__center--interactable mainScene__center__center--guid_outside">
+                <img src="xcf/v1_guid.png" alt="guid" class="mainScene__center__center--interactable mainScene__center__center--guid_outside">
                 <!-- shop_shopkeep -->
-                <img src="xcf/v1_shop_shop_front.png" alt="guid" class="mainScene__center__center--shop_shop_front">
+                <img src="xcf/v1_shop_shop_front.png" alt="shops front" class="mainScene__center__center--shop_shop_front ">
+                <img src="xcf/v1_shopkeep.png" alt="shopkeep" class="mainScene__center__center--interactable mainScene__center__center--shopkeep">
                 <!-- view -->
                 <!-- <div class="mainScene__center__center--interactable mainScene__center__center--coin_tower">
                     <img src="xcf/V1_interactables.png" alt="guid" class="mainScene__center__center--coin">
