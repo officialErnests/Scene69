@@ -433,13 +433,6 @@ function backtrack_func() {
     
     switch (scene) {
         case "opening":
-            disableScene()
-            transition()
-            closePlace()
-            setTimeout(() => {
-                hideScene()
-                switchScene("Cave")
-            }, 1000);
             break;
         case "shop_shopkeep":
             disableScene()

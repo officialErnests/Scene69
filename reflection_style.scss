@@ -1,0 +1,164 @@
+$fg-1: #e8e8e855;
+$fg-2: #c2c2c2;
+$fg-3: #9c9c9c;
+$fg-4: #696969;
+$fg-5: #353535;
+$diologue-primary: #ffffff;
+$diologue-secondary: #e0e0e0;
+$diologue-bg-primary: #000000bb;
+$diologue-bg-secondary: #696969bb;
+h1, h2, p, button, a {
+    margin: 0;
+    // font :DD 
+    font-family: "VT323", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+img {
+    image-rendering: pixelated;
+    cursor: pointer;
+}
+body {
+    overflow-x: hidden;
+    margin: 0;
+    background-image: url(xcf/V1_Town_shop_view.png);
+    background-size: contain;
+    backdrop-filter: blur(2px) brightness(60%);
+    width: 100vw;
+    height: 1000vh;
+}
+* {
+    scrollbar-color: $diologue-bg-secondary $diologue-bg-primary;
+}
+.ontop {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    padding: 40px 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 1s;
+    gap: 20px;
+    & > div {
+        background: linear-gradient(-5deg,$fg-1, $fg-2);
+        border: solid black 10px;
+        border-image-source: linear-gradient(-5deg,$fg-3, $fg-4);
+        width: calc(90vw - 20px);
+        padding: 10px;
+        h1 {
+            font-size: 3rem;
+            color: $diologue-primary;
+            text-shadow: 5px 5px black;
+            margin-bottom: 20px;
+        }
+        div {
+            background-color: $diologue-bg-secondary;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        p {
+            font-size: 2rem;
+            color: $diologue-secondary;
+            padding-left: 50px;
+            width: calc(100% - 100px);
+        }
+        a {
+            font-size: 1.5rem;
+            background-color: $diologue-bg-primary;
+            border: inset $fg-5 5px;
+            text-decoration: none;
+            color: $diologue-primary;
+            padding: 5px;
+            margin: 10px 5px;
+        }
+    }
+}
+#top {
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    h1 {
+        font-size: 2.5rem;
+        margin: 10px 0;
+        color: $diologue-primary;
+        background-color: $diologue-bg-secondary;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    h2 {
+        font-size: 2rem;
+        margin: 10px 0;
+        color: $diologue-primary;
+        background-color: $diologue-bg-secondary;
+        padding: 10px;
+        border-radius: 10px;
+    }
+}
+#topButton {
+    position: sticky;
+    display: block;
+    top: 10px;
+    padding: 10px;
+    font-size: 1.5rem;
+    background-color: $diologue-bg-primary;
+    border: inset $fg-5 5px;
+    text-decoration: none;
+    color: $diologue-primary;
+    z-index: 2;
+}
+.art {
+    display: flex;
+    overflow-x: auto;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: $diologue-bg-primary;
+    padding: 10px;
+    border-radius: 10px;
+    img {
+        z-index: 1;
+        height: 200px;
+        filter: drop-shadow(5px 2px 5px #ffffff);
+        border-radius: 10px;
+    }
+}
+#snowstorm {
+    position: sticky;
+    z-index: -10;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+.popup {
+    position: sticky;
+    top: 10px;
+    left: 10px;
+    width: calc(100vw - 60px);
+    height: calc(100vh - 40px);
+    z-index: 10;
+    background-color: $diologue-bg-primary;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    button {
+        width: 100%;
+        font-size: 3rem;
+        position: sticky;
+        top: 10px;
+    }
+    img {
+        width: 100%;
+
+    }
+    &--hidden {
+        pointer-events: none;
+        display: none;
+    }
+}

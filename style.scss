@@ -7,6 +7,14 @@ $diologue-primary: #ffffff;
 $diologue-secondary: #e0e0e0;
 $diologue-bg-primary: #000000bb;
 $diologue-bg-secondary: #696969bb;
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 body {
     // background: radial-gradient(circle,#94b4cb 0%, #23608b 100%);
     background-image: url(xcf/V1_Town_shop_view.png);

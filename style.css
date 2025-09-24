@@ -1,3 +1,10 @@
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
 body {
   background-image: url(xcf/V1_Town_shop_view.png);
   background-repeat: repeat;

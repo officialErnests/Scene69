@@ -3,25 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Reflection time :DD</title>
+    <link rel="shortcut icon" href="xcf/logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@700&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="reflection_style.css">
 </head>
-<body>
-    <h1>This is where i will place all my unused assets and ideas as well some self reflection :DD</h1>
-    <h2>WIP as there is not compleated html or css (any css at that)</h2>
-    <p>
-        --Credits-- <br>
-        Made whith html, scss, js<br>
-        0 Ai made by human with love <3<br><br>
-        programming js (diologue, scene manager, etc) - n0o0b090lv (me)<br>
-        scss (all styling) - n0o0b090lv (me)<br>
-        music and sfx - n0o0b090lv (me)<br>
-        all art - n0o0b090lv (me) <br><br>
-        in short i am soul dev in this XD <br>
-        it was made for summer of making grand tour<br>
-        (scene 69 btw XD) <br><br>
-        here you can find me <br>
-        <a href="https://hackclub.slack.com/archives/C09BE8QF1V5" target="_blank" class="startLinks">@n0o0b090lv</a> (slack channel) <br>
-        <a href="https://summer.hackclub.com/s" target="_blank" class="startLinks">grand tour</a> (made for grand tour [scene 69 :))])
-    </p>
+<body id="main">
+    <canvas class="snowstorm" width="640" height="320" id="snowstorm"></canvas>
+    <div id="popup" class="popup popup--hidden">
+        <button onclick="this.parentElement.classList.add('popup--hidden')">Close</button>
+        <img id="popup-img" src="xcf/V1_Town_shop_view.png" alt="">
+    </div>
+    <div class="ontop">
+        <div id="top">
+            <h1>This is where i will place all my unused assets and ideas as well some self reflection :DD</h1>
+            <a href="..">[[back to the game ;)]]</a>
+            <h2>Sections</h2>
+            <div>
+                <a href="#art">--ART--</a>
+                <a href="#story">--STORY--</a>
+                <a href="#code">--CODE--</a>
+                <a href="#music">--MUSIC--</a>
+                <a href="#yap">--YAP--</a>
+                <a href="#yap">--PLAYTESTERS--</a>
+                <a href="#links">--LINKS--</a>
+            </div>
+        </div>
+        <a href="#main" id="topButton">TO TOP</a>
+        <div id="art">
+            <h1>--ART--</h1>
+            <a href="#art_time">--Time--</a>
+            <a href="#art_process">--Process--</a>
+            <a href="#art_galery">--Galery--</a>
+            <hr>
+            <div class="main">
+                <h1 id="art_time">Time</h1>
+                <p>
+                    Honestly it took me days to draw, mostly i did in my school clases, becouse funny and was bored '~' <br>
+                    If I had to put estimate on then it would go like This<br><br>
+                    10min = 4x Text ~2.5min<br>
+                    45min = 9x Sketch ~5min<br>
+                    20min = 2x charecters ~10min<br>
+                    80min = 4x Shaded picture ~20min<br>
+                    160min = 4x Colored ~40h (litraly took whole evening for me to scan few pages as i color them digitaly XD)<br>
+                    <b>315min = Total = 5hrs 15min</b><br>
+                    But take it as you will as i was experimenting with coloring the pages in digitaly (most time went into this ;-;)<br>
+                </p>
+                <hr>
+                <h1 id="art_process">Process</h1>
+                <p>
+                    So at the start i just made quick prototype art <br>
+                    It was made to start the vision what i want in my game <br><br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/prototype1.png" alt="">
+                    </span><br>
+                    After i made the first image i had an vision what i wanted my game to be!<br>
+                    So i extracted assets from first image :))<br><br>
+                    Scene:
+                    <span class="art">
+                        <img class="click_img" src="xcf/prototype1_bgsnow.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_shop.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_tower.png" alt="">
+                    </span><br>
+                    Interactables:
+                    <span class="art">
+                        <img class="click_img" src="xcf/prototype1_outside_guide_interact.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_shop_interact.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_snowmobile_interact.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_tower_interact.png" alt="">
+                    </span><br>
+                    As well more sprites for gui:
+                    <span class="art">
+                        <img class="click_img" src="xcf/diologue_test.png" alt="art">
+                        <img class="click_img" src="xcf/logo.png" alt="art">
+                        <img class="click_img" src="xcf/prototype1_backpack_closed.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_backpack_open.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_backpack.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_backtrack.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_invSlot.png" alt="">
+                    </span><br>
+                    After I had made som prototype art i started making the real deal<br>
+                    The one that will be featured in game :)) <br>
+                    It all starts with drawing at school some sketches of scene<br><br>
+                    Example of sketches:
+                    (click to see more detailed and tilt your head XD)
+                    <span class="art">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194108.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_193507.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_193527.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194057.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171610.jpg" alt="">
+                    </span><br>
+                    After i had drawn said sketches i added some shading using pencils<br><br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194031.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194045.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194001.jpg" alt="">
+                    </span><br>
+                    After i shaded them (more of shaded in the big image at the end)<br>
+                    I saturate them digitaly using gimp<br>
+                    Then posturize them and set to multiply<br>
+                    And draw some collor :DD <br>
+                    (i have dveloped this process as i made this game so starter assets are bit rougher, non the less like them :]])<br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/v1_guid_picture.png" alt="">
+                        <img class="click_img" src="xcf/v1_shopkeep.png" alt="">
+                        <img class="click_img" src="xcf/V1_Town_shop_view.png" alt="">
+                        <img class="click_img" src="xcf/v1_shopkeep_picture.png" alt="">
+                    </span><br>
+                    And that is prety much it about the art process :))
+                </p>
+                <hr>
+                <h1 id="art_galery">Galery</h1>
+                <p>
+                    These are the assets for game :DD <br><br>
+                    For start all the cool finnsihed backgrounds :DD <br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/v1_shop_shop_back.png" alt="">
+                        <img class="click_img" src="xcf/v1_shop_shop_front.png" alt="">
+                        <img class="click_img" src="xcf/V1_Shop_view.png" alt="">
+                        <img class="click_img" src="xcf/v1_tower_view.png" alt="">
+                        <img class="click_img" src="xcf/V1_Town_shop_view.png" alt="">
+                    </span><br>
+                    Then we have some finnished interactables :)) <br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/v1_shopkeep.png" alt="">
+                        <img class="click_img" src="xcf/V1_interactables.png" alt="">
+                        <img class="click_img" src="xcf/v1_guid.png" alt="">
+                    </span><br>
+                    As well all the finnished other elements :DD <br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/V1_SnowAssets_1.png" alt="">
+                        <img class="click_img" src="xcf/v1_shopkeep_picture.png" alt="">
+                        <img class="click_img" src="xcf/v1_guid_picture.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_invSlot - Copy.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_backtrack.png" alt="">
+                        <img class="click_img" src="xcf/prototype_eye.png" alt="">
+                        <img class="click_img" src="xcf/logo.png" alt="">
+                    </span><br>
+                    And for those who want here are the notes :3<br>
+                    (There are as well my started cave explaration but didn't finnsih ;-;) <br>
+                    (28 if you were wondering)
+                    <span class="art">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171345.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171446.jpg" alt="">
+                    </span><br>
+                    ANd once more some misalanious stiuff :))<br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/prototype1_outside_tower_interact.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_tower.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_snowmobile_interact.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_guide_interact.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_shop.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_outside_shop_interact.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_backpack_open.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_backpack_closed.png" alt="">
+                        <img class="click_img" src="xcf/prototype1_backpack.png" alt="">
+                        <img class="click_img" src="xcf/prototype1.png" alt="">
+                    </span><br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/logo.png" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/eye.png" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171736.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171725.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171657.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171632.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171610.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250923_171559.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194108.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194057.jpg" alt="">
+                    </span><br>
+                    <span class="art">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194045.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194031.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_194001.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_193527.jpg" alt="">
+                        <img class="click_img" src="xcf/Unprocessed/20250917_193507.jpg" alt="">
+                    </span><br>
+                    <span class="art">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                        <img class="click_img" src="" alt="">
+                    </span><br>
+                </p>
+            </div>
+        </div>
+        <div id="story">
+            <h1>--STORY--</h1>
+            <div>
+                <p>
+                    The game has super cool story where you would go and explore the frozen caves to the city whic has been burried under the snow as former kind lays in there frozen<br>
+                    But then you remove the cursed dager from his heart wich starts unfreazing the whole island turning it back into green hills onece more<br>
+                    Due to time constrains i only managed my npc to foreshadow this and that's all ;-;, buut i had some art of frozen caves in galery... not finnished tho
+                </p>
+            </div>
+        </div>
+        <div id="code">
+            <h1>CODING</h1>
+            <div class="main">
+                <hr>
+                <p>
+                    It was fully writen by hand, 
+                    <br><b>THE 1400 lines of js<br>THE 134 lines of html<br>THE 500 lines of scss</b><br>
+                    Honestly haven't touched html, scss, js like for whole summer, so i guess this was great refresher
+                    <br> (trough summer i made games using godot :)))<br>
+                    And I am happy about my spagety code :DD<br>
+                    Btw diologue code uses whole alot of cases with some wise mystical numbers ;-;
+                </p>
+                <div style="font-size: 10pt;">
+                    //snow mobile &#9
+                    case "0": &#9
+                    case "01": &#9
+                    case "010": &#9
+                    case "0101": &#9
+                    case "0102": &#9
+                    case "01021": &#9
+                    case "00": &#9
+                    case "000": &#9
+                    case "100": &#9
+                    case "1001": &#9
+                    case "1": &#9
+                    case "10": &#9
+                    case "101": &#9
+                    case "1011": &#9
+                    case "10111": &#9
+                    case "011": &#9
+                    case "11": &#9
+                    case "110": &#9
+                    case "111": &#9
+                    case "112": &#9
+                    case "1121": &#9
+                    case "11210": &#9
+                    case "112100": &#9
+                    case "1121000": &#9
+                    //shop or &#9
+                    case "2": &#9
+                    case "21": &#9
+                    case "20": &#9
+                    case "200": &#9
+                    case "201": &#9
+                    case "2000": &#9
+                    case "2010": &#9
+                    case "2002": &#9
+                    case "20100": &#9
+                    case "20101": &#9
+                    case "201000": &#9
+                    case "201000_0": &#9
+                    case "201000_1": &#9
+                    case "201000_2": &#9
+                    case "201000_3": &#9
+                    case "201000_4": &#9
+                    case "201000_5": &#9
+                    case "2010000": &#9
+                    case "20100000": &#9
+                    case "20100001": &#9
+                    case "201000000": &#9
+                    case "201000001": &#9
+                    case "2010001": &#9
+                    //example &#9
+                            case "": &#9
+                                setPrompt &#9
+                    //exits &#9
+                            case "exit_28": &#9
+                    case "exit_74": &#9
+                    default: &#9
+                    console &#9
+                </div>
+            </div>
+        </div>
+        <div id="music">
+            <h1>MUSIC</h1>
+            <div>
+                <p>
+                    IM TELLING YOU JOHN IT IS THE LMMS<br>
+                    Msuic was made in lmms :))
+                </p>
+            </div>
+        </div>
+        <div id="yap">
+            <h1>YAP</h1>
+            <div>
+                <p>
+                    This game has taken many sacrifises, as of now it's 24.09.2025 <br>
+                    and 11:15pm and i've been coding this page <b> FOR 4h AND 30MIN</b>
+                    But otherwise this game was so much fun to make, as well i learned so much techinques in drawing <br>
+                    Some more coding skills under my belt as well and absouloutly loved yall for support :DD<br><br>
+                    I would wan't to add so much more and talk so much more, but don't got time on this project ;-;<br>
+                    So let's meet at slack and talk there :DD (feel free to dm @n0o0b090lv)
+                </p>
+            </div>
+        </div>
+        <div id="playtesters">
+            <h1>--PLAYTESTERS--</h1>
+            <div class="main">
+                <h1>random ahh duck</h1>
+                <img src="huh/Screenshot 2025-09-24 205837.png" alt="random ahh duck">
+            </div></div>
+        <div id="links">
+            <h1>--LINKS--</h1>
+            <div class="main">
+                <h1>These are ways to contact me :))</h1>
+                <a href="https://hackclub.slack.com/archives/C09BE8QF1V5" target="_blank">My slack chanal :DD</a>
+                <a href="https://summer.hackclub.com/s" target="_blank">SOM GRAND EXPEDITION</a>
+                <p>
+                    And now i go doze off or somthing as this was so draining :)) but job well done :DD
+                </p>
+            </div></div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <script src="justsnow.js"></script>
 </body>
 </html>
