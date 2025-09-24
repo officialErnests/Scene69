@@ -23,6 +23,7 @@ const timer = ms => new Promise(res => setTimeout(res, ms))
 const img_assets_1 = new Image(192, 128)
 img_assets_1.src = "xcf/V1_SnowAssets_1.png"
 var seitchingscenes = false
+var holdup_a = document.getElementById("holdup_a")
 let interactables = {
     "outside_door" : document.getElementsByClassName("mainScene__center__center--doorOutside")[0],
     "ladder_outside" : document.getElementsByClassName("mainScene__center__center--ladderOutside")[0],
@@ -1184,10 +1185,12 @@ function exitPrompt(scene) {
     case 28:
         holdup.classList.remove("holdup--hidden")
         holdup_h2.innerHTML = "And go to [Abandoned Polar Bear Breeding Operation] (aka 28)"
+        holdup_a.href = "/scenes/28"
         break;
     case 74:
         holdup.classList.remove("holdup--hidden")
         holdup_h2.innerHTML = "And go to [Spanky's] (aka 74)"
+        holdup_a.href = "/scenes/74"
         break;
     default:
         break;
