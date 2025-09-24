@@ -118,7 +118,7 @@ img {
   font-size: 12vw;
   border: 10px groove rgb(112, 203, 255);
   color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.4117647059);
+  background-color: rgba(0, 0, 0, 0.7333333333);
   text-align: center;
 }
 .startText hr {
@@ -187,7 +187,7 @@ img {
   position: absolute;
   width: calc(100vw - 20px);
   top: 0;
-  background-color: rgba(0, 0, 0, 0.4117647059);
+  background-color: rgba(0, 0, 0, 0.7333333333);
   text-align: center;
   padding: 10px;
   pointer-events: none;
@@ -195,14 +195,14 @@ img {
 .place h1 {
   color: #ffffff;
   font-size: max(3rem, 5vw);
-  background-color: rgba(105, 105, 105, 0.4117647059);
+  background-color: rgba(105, 105, 105, 0.7333333333);
   border-radius: 10px;
   margin-bottom: 10px;
 }
 .place p {
   color: #e0e0e0;
   font-size: max(1.5rem, 2vw);
-  background-color: rgba(105, 105, 105, 0.4117647059);
+  background-color: rgba(105, 105, 105, 0.7333333333);
   border-radius: 10px;
 }
 .place--open {
@@ -218,7 +218,7 @@ img {
   z-index: 15;
   position: absolute;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4117647059);
+  background-color: rgba(0, 0, 0, 0.7333333333);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -230,7 +230,7 @@ img {
 }
 .diologue span {
   display: flex;
-  background-color: rgba(105, 105, 105, 0.4117647059);
+  background-color: rgba(105, 105, 105, 0.7333333333);
   align-items: end;
   height: 50px;
   gap: 10px;
@@ -262,7 +262,7 @@ img {
 .diologue__text p {
   border-radius: 10px;
   padding: 10px;
-  background-color: rgba(105, 105, 105, 0.4117647059);
+  background-color: rgba(105, 105, 105, 0.7333333333);
   color: #ffffff;
   overflow: hidden;
   font-size: max(1.5rem, 2vw);
@@ -275,7 +275,7 @@ img {
   flex-direction: column;
 }
 .diologue__text__buttons button {
-  background-color: rgba(105, 105, 105, 0.4117647059);
+  background-color: rgba(105, 105, 105, 0.7333333333);
   color: #ffffff;
   font-size: max(1.5rem, 2vw);
   border-radius: 10px;

@@ -180,7 +180,8 @@ var dialogue_open = false
 var SN_Checked = 0
 var KV_Name = 0
 var HU_Name = 0
-
+var KV_Shoplist = 0
+var HU_Left = 0
 audio.addEventListener("ended", () => {audio.play()})
 class snowparticle {
     constructor (ctx, spawn, velocity, radius) {
@@ -322,7 +323,7 @@ function switchScene(scene_to_load) {
             //shows all assets
             showScene()
             //interactables
-            added_functions["shopkeep"] = openDiologue.bind(null, "1")
+            added_functions["shopkeep"] = openDiologue.bind(null, "2")
             interactables["shopkeep"].addEventListener("click", added_functions["shopkeep"])
             break;
         case "tower":
@@ -333,7 +334,7 @@ function switchScene(scene_to_load) {
             scene_description = "Whow, from up here you can see till The Great Frozen Wall (scene 73) :OO"
             setTimeout(openPlace, 1000, scene_name, scene_description)
             //sets snowoe :DD
-            snowing = false
+            snowing = true
             //shows all assets
             showScene()
             break;
@@ -541,8 +542,8 @@ function closeDiologue() {
     dialogue_open = false
 }
 async function processDiologue(id) {
-    console.log("Start");
-    console.log(Object.keys(added_functions).length);
+    // console.log("Start");
+    // console.log(Object.keys(added_functions).length);
     if (added_functions["diologue"]) {
         diologue.removeEventListener('click', added_functions["diologue"])
         delete added_functions["diologue"]
@@ -559,7 +560,7 @@ async function processDiologue(id) {
         dialogue_button_3.removeEventListener('click', added_functions["dialogue_button_3"])
         delete added_functions["dialogue_button_3"]
     }
-    console.log(Object.keys(added_functions).length);
+    // console.log(Object.keys(added_functions).length);
     
     if (id == "") {
         closeDiologue()
@@ -587,7 +588,7 @@ async function processDiologue(id) {
             break;
         case "010":
             setPrompt("Kvaras",
-                "Sure, if you keep in that direction you can reach Spankey's (scene 74), I've heard it has somthing to do with rolling the dice.",
+                "Sure, if you keep in that direction you can reach Spankey's (scene 74), I've heard it has something to do with rolling the dice.",
                 [
                     "Oh, you have no idea how good I am with that!",
                     "exit_74",
@@ -678,7 +679,7 @@ async function processDiologue(id) {
             if (KV_Name == 0){
                 processDiologue("10")
             } else {
-                processDiologue("10")
+                processDiologue("11")
             }
             break;
         case "10":
@@ -737,150 +738,347 @@ async function processDiologue(id) {
                 ]
             )
             break;
-        case "":
+        case "11":
             setPrompt("Kvaras",
-                "",
+                "So what's on your mind?",
                 [
+                    "Wanted to go hiking!",
+                    "110",
+                    "You live around here?",
+                    "111",
+                    "Where are we?",
+                    "112",
+                ]
+            )
+            break;
+        case "110":
+            setPrompt("Kvaras",
+                "Oh that is cool, you want to go to Wanted to go to Abandoned Polar Bear Breeding Operation,",
+                [
+                    "Yeah could go for little trip",
+                    "exit_28",
+                    "Anywhere, but there hahaha",
                     "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "I'll pass ",
                     "",
                 ]
             )
             break;
-        case "":
+        case "111":
             setPrompt("Kvaras",
-                "",
+                "Yeah, i come from Spankey's, if you want you can take the snow mobile to go there",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "Sure!",
+                    "exit_74",
+                    "I'm good",
                     "",
                 ]
             )
             break;
-        case "":
+        case "112":
             setPrompt("Kvaras",
-                "",
+                "Basically in winter wonder land, snow each and every day for decades.",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "Oh, that sound horrifying, can we take a trip?",
+                    "110",
+                    "Wait, for real, you're not exaggerating that it has been snowing for decades??",
+                    "1121",
+                ]
+            )
+            break;
+        case "1121":
+            setPrompt("Kvaras",
+                "Ha ha, yeah but no it has been snowing for such a long time as the layers have build on to each other for decades. Also there are some rumors",
+                [
+                    "Rumors? What do you mean?",
+                    "11210",
+                    "That's cool, i guess... I will look around now.",
                     "",
                 ]
             )
             break;
-        case "":
+        case "11210":
             setPrompt("Kvaras",
-                "",
+                "Yeah, that there is buried kingdom under this very spot, but hey it's a legend..",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "Ohh cool, can we go on expedition?",
+                    "112100",
+                    "Yeah probably a legend",
                     "",
                 ]
             )
             break;
-        case "":
+        case "112100":
             setPrompt("Kvaras",
-                "",
+                "We need equipment and currently the shop is on short supply. Can you go ask him?",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "That's sad.. I'm going to go ask him about equipment",
+                    "1121000",
+                    "Welp, maybe next time",
                     "",
                 ]
             )
             break;
-        case "":
-            setPrompt("Kvaras",
-                "",
+        case "1121000":
+            KV_Shoplist = 1
+            closeDiologue()
+            return
+        //shop or Hubert lines
+        case "2":
+            if (HU_Left == 1) {
+                processDiologue("21")
+            } else {
+                processDiologue("20")
+            }
+            break;
+        case "21":
+            HU_Left = 0
+            setPrompt("Hubert",
+                "You know, it is rude to leave in the middle of story.. anyways",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "Ye, ye it was too long",
+                    "20",
+                ]
+            )
+            break;
+        case "20":
+            if (HU_Name == 1) {
+                processDiologue("201")
+            } else {
+                processDiologue("200")
+            }
+            break;
+        case "200":
+            if (KV_Shoplist == 1) {
+                setPrompt("Hubert",
+                    "Oh, another ventures spirit.. what would you like?",
+                    [
+                        "Hi, who are you?",
+                        "2000",
+                        "Can i ask about the supplies?",
+                        "2010",
+                        "No, nothing..",
+                        "2002",
+                    ]
+                )
+            } else {
+                setPrompt("Hubert",
+                    "Oh, another ventures spirit.. what would you like?",
+                    [
+                        "Hi, who are you?",
+                        "2000",
+                        "... (go talk to Kvaras)",
+                        "200",
+                        "No, nothing..",
+                        "2002",
+                    ]
+                )
+            }
+            break;
+        case "201":
+            if (KV_Shoplist == 1) {
+                setPrompt("Hubert",
+                    "Hi again... i guess",
+                    [
+                        "Can i ask about the supplies?",
+                        "2010",
+                        "Didn't mean to bother you",
+                        "2002",
+                    ]
+                )
+            } else {
+                setPrompt("Hubert",
+                    "Hi again... i guess",
+                    [
+                        "... (go talk to Kvaras)",
+                        "201",
+                        "Didn't mean to bother you",
+                        "2002",
+                    ]
+                )
+            }
+            break;
+        case "2000":
+            HU_Name = 1
+            setPrompt("Hubert",
+                "So came here just to chat?\n\
+                Fair I'm Hubert, the shop keep.",
+                [
+                    "Cool, i guess..",
+                    "2002",
+                ]
+            )
+            break;
+        case "2010":
+            setPrompt("Hubert",
+                "Ugh, did Kvaras sent you here?\n\
+                I already told him that they aren't coming anytime soon",
+                [
+                    "Yup, wanted to go explore the cave outside the shop view",
+                    "20100",
+                    "WHAT NOOOO, I was just curious that's all hahaha....",
+                    "20101",
+                ]
+            )
+            break;
+        case "2002":
+            setPrompt("Hubert",
+                "Tought so",
+                [
                     "",
                 ]
             )
             break;
-        case "":
-            setPrompt("Kvaras",
-                "",
+        case "20100":
+            setPrompt("Hubert",
+                "Oh that cave... if you wish i can tell you the cave connects to the ancient kingdom under this very village",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "Wait, under this village???",
+                    "201000",
+                    "Like I'd believe in you",
+                    "20101",
+                ]
+            )
+            break;
+        case "20101":
+            setPrompt("Hubert",
+                "Riiigght.. whatever ",
+                [
                     "",
                 ]
             )
             break;
-        case "":
-            setPrompt("Kvaras",
-                "",
+        case "201000":
+            setPrompt("Hubert",
+                "Well it's a bit of a long story.. but if you're up for it i guess i could spare some time",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "Oh I'm down",
+                    "201000_0",
+                    "No, not interested ",
+                    "2002",
+                ]
+            )
+            break;
+        case "201000_0":
+            setPrompt("Hubert",
+                "So, long ago this was a green land where one magical king ruled the land",
+                [
+                    "Oh, that's nice.",
+                    "201000_1",
+                    "*quietly sneak out*",
+                    "2010001",
+                ]
+            )
+            break;
+        case "201000_1":
+            setPrompt("Hubert",
+                "Until one day, a lich came and fought the kingdom, it was ruthless war, but the king was winning in this war until one day...",
+                [
+                    "Oh god, what happened next?",
+                    "201000_2",
+                    "*quietly sneak out*",
+                    "2010001",
+                ]
+            )
+            break;
+        case "201000_2":
+            setPrompt("Hubert",
+                "Until one day the lich sneaked past the guards and entered kings room and stabbed him with a cursed blade of eternal frost",
+                [
+                    "NOOOOOOOOOO",
+                    "201000_3",
+                    "*quietly sneak out*",
+                    "2010001",
+                ]
+            )
+            break;
+        case "201000_3":
+            setPrompt("Hubert",
+                "Then there was silence as coldness started spreading from frozen kings corpse..",
+                [
+                    "Wait how?",
+                    "201000_4",
+                    "*quietly sneak out*",
+                    "2010001",
+                ]
+            )
+            break;
+        case "201000_4":
+            setPrompt("Hubert",
+                "You see the whole land was under kings magic and it was being run by it and if now the kings magic got frozen",
+                [
+                    "Wait so what happened to citizens?",
+                    "201000_5",
+                    "*quietly sneak out*",
+                    "2010001",
+                ]
+            )
+            break;
+        case "201000_5":
+            setPrompt("Hubert",
+                "The whole land froze over turning anyone in it in enteral slumber and calling endless winter...",
+                [
+                    "Well that is a sad story..",
+                    "2010000",
+                    "*quietly sneak out*",
+                    "2010001",
+                ]
+            )
+            break;
+        case "2010000":
+            setPrompt("Hubert",
+                "Whow you actual listened trough the story",
+                [
+                    "Yeah, I liked the story",
+                    "20100000",
+                    "Mid story, in my opinion",
+                    "20100001",
+                ]
+            )
+            break;
+        case "20100000":
+            setPrompt("Hubert",
+                "Welp what can i say if you ever find the ancient city remove the cursed dagger and this world will become green once more",
+                [
+                    "Can you supply this, as i am more than ready to explore the cave",
+                    "201000000",
+                    "Yeah, I'll just hang out",
+                    "201000001",
+                ]
+            )
+            break;
+        case "20100001":
+            setPrompt("Hubert",
+                "Ohh..",
+                [
+                    "20100000",
+                ]
+            )
+            break;
+        case "201000000":
+            setPrompt("Hubert",
+                "Fair enough",
+                [
                     "",
                 ]
             )
             break;
-        case "":
-            setPrompt("Kvaras",
-                "",
+        case "201000001":
+            setPrompt("Hubert",
+                "I would be down, but as i said i got no resources, so in meanwhile you can go around.. i guess",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
                     "",
                 ]
             )
             break;
-        case "":
-            setPrompt("Kvaras",
-                "",
+        case "2010001":
+            setPrompt("Narrator",
+                "He didn't notice you as you sneaked out",
                 [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
                     "",
                 ]
             )
             break;
-        case "":
-            setPrompt("Kvaras",
-                "",
-                [
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                ]
-            )
-            break;
-
 
         //example
         case "":
@@ -925,7 +1123,7 @@ async function setPrompt(name, text, button_texts) {
             break;
         case "Hubert":
             diologue_img.src = "xcf/v1_shopkeep_picture.png"
-            if (KV_Name == 0) {
+            if (HU_Name == 0) {
                 diologue_name.innerHTML = "???"
             } else {
                 diologue_name.innerHTML = name
@@ -945,7 +1143,7 @@ async function setPrompt(name, text, button_texts) {
         setTimeout(() => {
             added_functions["diologue"] = processDiologue.bind(null, button_texts[0])
             diologue.addEventListener('click', added_functions["diologue"])
-            console.log(Object.keys(added_functions).length);
+            // console.log(Object.keys(added_functions).length);
         }, timeout)
     }
     if (button_texts.length >= 2) {
@@ -954,7 +1152,7 @@ async function setPrompt(name, text, button_texts) {
         setTimeout(() => {
             added_functions["dialogue_button_1"] = processDiologue.bind(null, button_texts[1])
             dialogue_button_1.addEventListener('click', added_functions["dialogue_button_1"])
-            console.log(Object.keys(added_functions).length);
+            // console.log(Object.keys(added_functions).length);
         }, timeout)
     } else {
         dialogue_button_1.style.display = "none"
@@ -965,7 +1163,7 @@ async function setPrompt(name, text, button_texts) {
         setTimeout(() => {
             added_functions["dialogue_button_2"] = processDiologue.bind(null, button_texts[3])
             dialogue_button_2.addEventListener('click', added_functions["dialogue_button_2"])
-            console.log(Object.keys(added_functions).length);
+            // console.log(Object.keys(added_functions).length);
         }, timeout)
     } else {
         dialogue_button_2.style.display = "none"
@@ -976,7 +1174,7 @@ async function setPrompt(name, text, button_texts) {
         setTimeout(() => {
             added_functions["dialogue_button_3"] = processDiologue.bind(null, button_texts[5])
             dialogue_button_3.addEventListener('click', added_functions["dialogue_button_3"])
-            console.log(Object.keys(added_functions).length);
+            // console.log(Object.keys(added_functions).length);
         }, timeout)
     } else {
         dialogue_button_3.style.display = "none"
